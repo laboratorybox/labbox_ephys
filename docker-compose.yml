@@ -1,0 +1,14 @@
+version: "3"
+services:
+  gui:
+    build: gui
+    ports:
+        - "${LABBOX_EPHYS_PORT}:8080"
+    volumes:
+        - "${KACHERY_STORAGE_DIR}:/kachery-storage"
+        - "${EPHYS_DATA_DIR}:/ephys-data"
+        - "/etc/localtime:/etc/localtime:ro"
+        - "/etc/passwd:/etc/passwd:ro"
+        - "${HOME}:${HOME}"
+        - "/tmp:/tmp"
+    user: "${USER_ID}:${GROUP_ID}"

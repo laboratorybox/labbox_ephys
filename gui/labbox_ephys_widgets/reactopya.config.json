@@ -1,0 +1,10 @@
+{
+    "project_name": "labbox_ephys_widgets",
+    "version": "0.1.0",
+    "description": "Widgets for labbox_ephys",
+    "author": "Jeremy Magland",
+    "license": "Apache-2.0",
+    "setup_py": {
+        "install_requires": []
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "project_name": "labbox_ephys_widgets",
+    "type": "MainWidget",
+    "description": "Main widget for labbox_ephys",
+    "defaultProps": {}
+}

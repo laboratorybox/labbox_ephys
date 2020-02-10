@@ -1,0 +1,19 @@
+{
+    "apps": [
+        {
+            "name": "labbox_ephys",
+            "pyFile": "labbox_ephys.py"
+        },
+        {
+            "name": "directoryview",
+            "pyFile": "directoryview.py"
+        },
+        {
+            "name": "timeseriesview",
+            "pyFile": "timeseriesview.py"
+        }
+    ],
+    "killCode": {
+        "env": "LABBOX_EPHYS_KILL_CODE"
+    }
+}
