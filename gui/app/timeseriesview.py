@@ -15,9 +15,10 @@ parser.add_argument('--path', help='Path to the recoring to view', required=True
 
 args = parser.parse_args()
 
-R = AutoRecordingExtractor(args.path)
+with ka.config(fr='default_readonly'):
+    R = AutoRecordingExtractor(args.path)
 
-X = sw.TimeseriesView(
-    recording=R
-)
-X.show()
+    X = sw.TimeseriesView(
+        recording=R
+    )
+    X.show()
