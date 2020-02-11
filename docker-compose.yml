@@ -1,14 +1,53 @@
 version: "3"
 services:
   gui:
-    build: gui
+    image: labbox_ephys_gui:latest
     ports:
-        - "${LABBOX_EPHYS_PORT}:8080"
+      - "${LABBOX_EPHYS_PORT}:8080"
     volumes:
-        - "${KACHERY_STORAGE_DIR}:/kachery-storage"
-        - "${EPHYS_DATA_DIR}:/ephys-data"
-        - "/etc/localtime:/etc/localtime:ro"
-        - "/etc/passwd:/etc/passwd:ro"
-        - "${HOME}:${HOME}"
-        - "/tmp:/tmp"
+      - "${KACHERY_STORAGE_DIR}:/kachery-storage"
+      - "${LOCAL_DATA_DIR}:/local-data"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/passwd:/etc/passwd:ro"
+      - "${HOME}:${HOME}"
+      - "/tmp:/tmp"
+    environment:
+      - KACHERY_STORAGE_DIR=/kachery-storage
+      - MONGO_USER
+      - MONGO_PASSWORD
+      - MONGO_PORT
+      - JUPYTERLAB_PORT
     user: "${USER_ID}:${GROUP_ID}"
+  jupyter:
+    image: labbox_ephys_gui:latest
+    ports:
+      - "${JUPYTERLAB_PORT}:8888"
+    volumes:
+      - "${KACHERY_STORAGE_DIR}:/kachery-storage"
+      - "${LOCAL_DATA_DIR}:/local-data"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/passwd:/etc/passwd:ro"
+      - "${HOME}:${HOME}"
+      - "/tmp:/tmp"
+    environment:
+      - KACHERY_STORAGE_DIR=/kachery-storage
+      - MONGO_USER
+      - MONGO_PASSWORD
+      - MONGO_PORT
+    user: "${USER_ID}:${GROUP_ID}"
+    command: "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/local-data --NotebookApp.token=''"
+  mongodb:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=${MONGO_ADMIN_USER}
+        - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ADMIN_PASSWORD}
+        - MONGO_INITDB_DATABASE="labbox"
+        - MONGO_USER
+        - MONGO_PASSWORD
+    ports:
+        - ${MONGO_PORT}:27017
+    volumes:
+        - ${MONGO_DATA_DIR}:/data/db
+        - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro

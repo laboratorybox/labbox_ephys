@@ -36,7 +36,12 @@ export default class MainWidget extends Component {
                 <h3>Labbox Ephys</h3>
                 <ul>
                     <li>
-                        <a href={`directoryview?path=/${this.props.ephys_data_dir||'ephys-data'}`}>
+                        <a href={`http://${location.hostname}:${this.props.jupyterlab_port}/lab`} target="_blank">
+                            Open JupyterLab
+                        </a>
+                    </li>
+                    <li>
+                        <a href={`directoryview?path=${this.props.local_data_dir||'/local-data'}`}>
                             View local ephys data
                         </a>
                     </li>

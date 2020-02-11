@@ -20,6 +20,8 @@ RUN rm /usr/bin/python && ln -s python3 /usr/bin/python && rm /usr/bin/pip && ln
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN apt-get install -y locales && locale-gen en_US.UTF-8
 
+RUN pip install ipython jupyter jupyterlab
+
 RUN mkdir -p /src
 
 #########################################
@@ -43,8 +45,6 @@ RUN git clone https://github.com/flatironinstitute/spikeforest2 /src/spikeforest
 WORKDIR /src/spikeforest2/spikeforest_widgets
 RUN reactopya install && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && rm -rf /tmp/* && yarn cache clean
 
-RUN pip install ipython
-
 ### Install labbox_ephys_widgets
 COPY labbox_ephys_widgets/reactopya.config.json /src/labbox_ephys_widgets/reactopya.config.json
 COPY labbox_ephys_widgets/package.json /src/labbox_ephys_widgets/package.json
@@ -54,6 +54,4 @@ RUN reactopya install && find . -name 'node_modules' -type d -prune -exec rm -rf
 
 COPY app /app
 
-EXPOSE 8080
-
-CMD KILL_CODE=killcode KACHERY_STORAGE_DIR=/kachery-storage reactopya-server /app/app.json --port 8080
+CMD KILL_CODE=killcode reactopya-server /app/app.json --port 8080
