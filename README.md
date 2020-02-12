@@ -7,6 +7,7 @@ Browser-based visualization of ephys data
 * Linux
 * Docker
 * Docker-compose
+* Chrome web browser
 
 ### Step 1. Clone this repository
 
