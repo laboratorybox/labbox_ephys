@@ -35,6 +35,10 @@ RUN git clone https://github.com/flatironinstitute/reactopya /src/reactopya \
 RUN pip install --upgrade setuptools
 
 #########################################
+### Install spikeinterface packages
+RUN pip install spiketoolkit==0.5.1 spikewidgets==0.3.2 spikecomparison==0.2.2
+
+#########################################
 ### Install spikeforest2
 RUN git clone https://github.com/flatironinstitute/spikeforest2 /src/spikeforest2 \
     && cd /src/spikeforest2 \
@@ -52,6 +56,9 @@ COPY labbox_ephys_widgets/widgets /src/labbox_ephys_widgets/widgets
 WORKDIR /src/labbox_ephys_widgets
 RUN reactopya install && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && rm -rf /tmp/* && yarn cache clean
 
-COPY app /app
+### Install labbox_ephys
+COPY labbox_ephys /src/labbox_ephys
+WORKDIR /src/labbox_ephys
+RUN pip install .
 
-CMD KILL_CODE=killcode reactopya-server /app/app.json --port 8080
+COPY app /app

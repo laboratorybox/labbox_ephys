@@ -1,7 +1,7 @@
 version: "3"
 services:
   gui:
-    image: labbox_ephys_gui:latest
+    image: labbox_ephys:latest
     ports:
       - "${LABBOX_EPHYS_PORT}:8080"
     volumes:
@@ -19,8 +19,9 @@ services:
       - MONGO_PORT=27017
       - JUPYTERLAB_PORT
     user: "${USER_ID}:${GROUP_ID}"
+    command: "reactopya-server /app/app.json --port 8080"
   jupyter:
-    image: labbox_ephys_gui:latest
+    image: labbox_ephys:latest
     ports:
       - "${JUPYTERLAB_PORT}:8888"
     volumes:

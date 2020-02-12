@@ -34,6 +34,6 @@ fi
 export USER_ID=`id -u`
 export GROUP_ID=`id -g`
 
-docker build -t labbox_ephys_gui:latest gui
+docker build -t labbox_ephys:latest docker
 docker pull mongo:latest
 docker-compose up --build
