@@ -19,3 +19,4 @@ export MONGO_PASSWORD=test-labbox-password
 export MONGO_PORT=27017
 
 export JUPYTERLAB_PORT=8888
+export JUPYTERLAB_TOKEN=secret-token

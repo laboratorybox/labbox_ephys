@@ -2,7 +2,9 @@
 
 Browser-based visualization of ephys data
 
-## Prerequisites
+## Installation
+
+### Prerequisites
 
 * Linux
 * Docker
@@ -68,15 +70,23 @@ http://localhost:8080/app/labbox_ephys
 
 If everything worked, you should see some content in the browser
 
-### Step 5. Import some example recordings
+## Importing recordings
 
-Click on "Open JupyterLab" to open a new browser tab running JupyterLab. This is a JupyterLab session inside the labbox. It gives you direct access to files within the labbox and allows you to run Python code using notebooks (.ipynb files). [Click here for more information about JupyterLab](https://jupyterlab.readthedocs.io/en/stable/#).
+From the main labbox_ephys page, click on "Open JupyterLab" to open a new browser tab running JupyterLab. This is a JupyterLab session inside the labbox. It gives you direct access to files within the labbox and allows you to run Python code using notebooks (.ipynb files). [Click here for more information about JupyterLab](https://jupyterlab.readthedocs.io/en/stable/#).
 
 You should see two folders on the left: "local-data" and "example_notebooks". The local-data folder corresponds to the LOCAL_DATA_DIR specified above. The example_notebooks directory is a read-only directory of example Jupyter notebooks to help get you started.
 
-Double-click on example_notebooks and then on example_spikeforest_import.ipynb. This will open a notebook that will allow you to import some example recordings from the SpikeForest database. If you run the cells it will download and import the data. Depending on the speed of your internet connection, it may take some time to download the data (a few gigabytes).
+### Importing example SpikeForest recordings
+
+To download and import some example recordings from the SpikeForest database, double-click on `example_notebooks` and then on `example_spikeforest_import.ipynb`. This will open a notebook that will allow you to import some example recordings from the SpikeForest database. If you run the notebook cells it will download and import the data. Depending on the speed of your internet connection, it may take some time to download the data (a few gigabytes).
 
 Once the recordings are imported, you can then go back to the main labbox_ephys page and click on the "View recordings" link. You should then be able to see the imported recordings.
 
+### Importing recordings from disk
 
+To import recordings from disk, first save your recordings in individual directories inside the $LOCAL_DATA_DIR directory. Right now only the `raw.mda` format is supported, but this will soon expand to include other formats. The directory names will be used as the recording IDs during import. You may want to use a nested directory structure to achieve a hierarchical organization of the recordings.
+
+From within JupyterLab, open the `example_notebooks/example_local_import.ipynb` notebooks and run the notebook cells. This will automatically find and import all of the recordings found in the the $LOCAL_DATA_DIR directory.
+
+Once the recordings are imported, you can then go back to the main labbox_ephys page and click on the "View recordings" link. You should then be able to see the imported recordings.
 
