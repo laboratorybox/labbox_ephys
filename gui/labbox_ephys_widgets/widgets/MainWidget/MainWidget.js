@@ -36,6 +36,11 @@ export default class MainWidget extends Component {
                 <h3>Labbox Ephys</h3>
                 <ul>
                     <li>
+                        <a href={`recordingsview`}>
+                            View recordings
+                        </a>
+                    </li>
+                    <li>
                         <a href={`http://${location.hostname}:${this.props.jupyterlab_port}/lab`} target="_blank">
                             Open JupyterLab
                         </a>

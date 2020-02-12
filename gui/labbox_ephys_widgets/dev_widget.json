@@ -1,5 +1,10 @@
 {
     "widget": {
+        "type": "RecordingsView",
+        "props": {
+        }
+    },
+    "widget_m": {
         "type": "MainWidget",
         "props": {
             

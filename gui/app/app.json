@@ -11,6 +11,10 @@
         {
             "name": "timeseriesview",
             "pyFile": "timeseriesview.py"
+        },
+        {
+            "name": "recordingsview",
+            "pyFile": "recordingsview.py"
         }
     ],
     "killCode": {
