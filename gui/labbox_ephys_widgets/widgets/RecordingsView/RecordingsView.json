@@ -1,0 +1,6 @@
+{
+    "project_name": "labbox_ephys_widgets",
+    "type": "RecordingsView",
+    "description": "View database of recordings",
+    "defaultProps": {}
+}
