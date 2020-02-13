@@ -1,0 +1,6 @@
+{
+    "project_name": "labbox_ephys_widgets",
+    "type": "SortingsView",
+    "description": "View database of recordings",
+    "defaultProps": {}
+}

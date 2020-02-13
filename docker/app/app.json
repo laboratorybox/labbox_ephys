@@ -2,7 +2,7 @@
     "apps": [
         {
             "name": "labbox_ephys",
-            "pyFile": "labbox_ephys.py"
+            "pyFile": "main.py"
         },
         {
             "name": "directoryview",
@@ -15,6 +15,14 @@
         {
             "name": "recordingsview",
             "pyFile": "recordingsview.py"
+        },
+        {
+            "name": "sortingsview",
+            "pyFile": "sortingsview.py"
+        },
+        {
+            "name": "sortingview",
+            "pyFile": "sortingview.py"
         }
     ],
     "killCode": {

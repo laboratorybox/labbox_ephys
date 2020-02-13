@@ -5,6 +5,9 @@
     "author": "Jeremy Magland",
     "license": "Apache-2.0",
     "setup_py": {
-        "install_requires": []
+        "install_requires": [
+            "matplotlib",
+            "mpld3"
+        ]
     }
 }

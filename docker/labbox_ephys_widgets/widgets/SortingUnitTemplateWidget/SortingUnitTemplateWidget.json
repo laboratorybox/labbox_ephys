@@ -1,0 +1,6 @@
+{
+    "project_name": "labbox_ephys_widgets",
+    "type": "SortingUnitTemplateWidget",
+    "description": "Template waveform of sorting unit",
+    "defaultProps": {}
+}

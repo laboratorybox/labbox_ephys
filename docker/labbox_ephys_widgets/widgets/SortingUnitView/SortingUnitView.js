@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
-import RecordingsTable from './RecordingsTable.js'
-const config = require('./RecordingsView.json');
+import SortingUnitTemplateWidget from '../SortingUnitTemplateWidget/SortingUnitTemplateWidget';
+const config = require('./SortingUnitView.json');
 
-export default class RecordingsView extends Component {
-    static title = 'View database of recordings'
+export default class SortingUnitView extends Component {
+    static title = 'View a unit in a sorting result'
     static reactopyaConfig = config
     constructor(props) {
         super(props);
         this.state = {
             // javascript state
+            sorting_id: '',
             
             // python state
-            recordings: null,
+            sorting: null,
             status: '',
             status_message: ''
         }
@@ -20,35 +21,45 @@ export default class RecordingsView extends Component {
     componentDidMount() {
         this.pythonInterface = new PythonInterface(this, config);
         this.pythonInterface.start();
-        this.setState({
-            status: 'started',
-            status_message: 'Starting python backend'
-        });
-        this.pythonInterface.setState({
-            trigger: 1
-        });
+        // Use this.pythonInterface.setState(...) to pass data to the python backend
+        if (this.props.sortingId) {
+            this.setState({
+                status: 'started',
+                status_message: 'Starting python backend'
+            });
+            this.pythonInterface.setState({
+                sorting_id: this.props.sortingId
+            });
+        }
+        else {
+            this.setState({
+                sorting: this.props.sorting
+            })
+        }
     }
     componentWillUnmount() {
         this.pythonInterface.stop();
     }
-    _handleDeleteRecordings = (recordingIds) => {
-        this.pythonInterface.sendMessage({action: 'remove_recordings', recording_ids: recordingIds});
-    }
     render() {
-        const recordings = this.state.recordings;
+        const { sorting } = this.state;
+        const { unitId } = this.props;
 
-        if (!recordings) {
+        if (!sorting) {
             return (
                 <ReportStatus {...this.state} />
             );
         }
 
         return (
-            <RecordingsTable
-                recordings={recordings}
-                onDeleteRecordings={this._handleDeleteRecordings}
-            />
-        );
+            <div>
+                <SortingUnitTemplateWidget
+                    sorting={sorting}
+                    unitId={unitId}
+                    reactopyaParent={this}
+                    reactopyaChildId="SortingUnitTemplateWidget"
+                />
+            </div>
+        )
     }
 }
 

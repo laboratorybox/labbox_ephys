@@ -1,25 +1,25 @@
 from .lbdb import find, remove
 
-class RecordingsView:
+class SortingsView:
     def __init__(self):
         super().__init__()
 
     def javascript_state_changed(self, prev_state, state):
-        self._set_status('running', 'Loading recordings...')
+        self._set_status('running', 'Loading sortings...')
 
-        self._refresh_recordings()
+        self._refresh_sortings()
 
-        self._set_status('finished', 'Finished loading recordings.')
+        self._set_status('finished', 'Finished loading sortings.')
 
     def on_message(self, msg):
-        if msg['action'] == 'remove_recordings':
-            recording_ids = msg['recording_ids']
-            remove(collection='recordings', query={'recording_id': {'$in': recording_ids}})
-        self._refresh_recordings()
+        if msg['action'] == 'remove_sortings':
+            sorting_ids = msg['sorting_ids']
+            remove(collection='sortings', query={'sorting_id': {'$in': sorting_ids}})
+        self._refresh_sortings()
     
-    def _refresh_recordings(self):
-        recordings = find(collection='recordings', query=dict())
-        self._set_state(recordings=recordings)
+    def _refresh_sortings(self):
+        sortings = find(collection='sortings', query=dict())
+        self._set_state(sortings=sortings)
     
     # Send a custom message to JavaScript side
     # In .js file, use this.pythonInterface.onMessage((msg) => {...})

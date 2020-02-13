@@ -17,6 +17,7 @@ class _MongoClient:
             raise Exception('No db.')
         ret = []
         for doc in db.find(query):
+            if '_id' in doc: del doc['_id']
             ret.append(doc)
         return ret
     def update(self, *, collection, query, update, config, upsert=False):
@@ -31,7 +32,6 @@ class _MongoClient:
         db.remove(query)
     def _get_db(self, *, collection, config):
         url = config['url']
-        print(url)
         database = config['database']
         if config.get('password', None) is not None:
             url = url.replace('${password}', config['password'])

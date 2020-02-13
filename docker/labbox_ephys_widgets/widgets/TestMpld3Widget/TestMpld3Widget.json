@@ -1,0 +1,6 @@
+{
+    "project_name": "labbox_ephys_widgets",
+    "type": "TestMpld3Widget",
+    "description": "testing mpld3 library",
+    "defaultProps": {}
+}

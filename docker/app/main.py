@@ -1,6 +1,8 @@
 import os
 import labbox_ephys_widgets as lew
 
+print(lew.__file__)
+print(dir(lew))
 lew.init_electron()
 
 X = lew.MainWidget(

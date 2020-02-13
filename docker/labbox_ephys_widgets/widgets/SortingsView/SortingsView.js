@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
-import RecordingsTable from './RecordingsTable.js'
-const config = require('./RecordingsView.json');
+import SortingsTable from './SortingsTable.js'
+const config = require('./SortingsView.json');
 
-export default class RecordingsView extends Component {
-    static title = 'View database of recordings'
+export default class SortingsView extends Component {
+    static title = 'View database of sortings'
     static reactopyaConfig = config
     constructor(props) {
         super(props);
@@ -12,7 +12,7 @@ export default class RecordingsView extends Component {
             // javascript state
             
             // python state
-            recordings: null,
+            sortings: null,
             status: '',
             status_message: ''
         }
@@ -31,22 +31,22 @@ export default class RecordingsView extends Component {
     componentWillUnmount() {
         this.pythonInterface.stop();
     }
-    _handleDeleteRecordings = (recordingIds) => {
-        this.pythonInterface.sendMessage({action: 'remove_recordings', recording_ids: recordingIds});
+    _handleDeleteSortings = (sortingIds) => {
+        this.pythonInterface.sendMessage({action: 'remove_sortings', sorting_ids: sortingIds});
     }
     render() {
-        const recordings = this.state.recordings;
+        const sortings = this.state.sortings;
 
-        if (!recordings) {
+        if (!sortings) {
             return (
                 <ReportStatus {...this.state} />
             );
         }
 
         return (
-            <RecordingsTable
-                recordings={recordings}
-                onDeleteRecordings={this._handleDeleteRecordings}
+            <SortingsTable
+                sortings={sortings}
+                onDeleteSortings={this._handleDeleteSortings}
             />
         );
     }

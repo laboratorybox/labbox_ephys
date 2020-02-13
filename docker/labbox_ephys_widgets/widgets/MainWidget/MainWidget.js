@@ -41,6 +41,11 @@ export default class MainWidget extends Component {
                         </a>
                     </li>
                     <li>
+                        <a href={`sortingsview`}>
+                            View sortings
+                        </a>
+                    </li>
+                    <li>
                         <a href={`http://${location.hostname}:${this.props.jupyterlab_port}/lab`} target="_blank">
                             Open JupyterLab
                         </a>
