@@ -7,3 +7,4 @@ export { default as SortingView } from './SortingView/SortingView';
 export { default as SortingUnitView } from './SortingUnitView/SortingUnitView';
 export { default as SortingUnitTemplateWidget } from './SortingUnitTemplateWidget/SortingUnitTemplateWidget';
 export { default as SortingUnitBox } from './SortingUnitBox/SortingUnitBox';
+export { default as SortingUnitCorrelogramWidget } from './SortingUnitCorrelogramWidget/SortingUnitCorrelogramWidget';

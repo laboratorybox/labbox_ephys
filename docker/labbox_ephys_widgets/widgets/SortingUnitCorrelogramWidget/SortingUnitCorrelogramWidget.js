@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
 import './mpld3_custom.css';
-const config = require('./SortingUnitTemplateWidget.json');
+const config = require('./SortingUnitCorrelogramWidget.json');
 const d3 = require('./d3.min.js');
 console.log('d3=', d3);
 window.mpld3 = require('./mpld3.v0.3.js');
 
-export default class SortingUnitTemplateWidget extends Component {
-    static title = 'Template waveform of sorting unit'
+export default class SortingUnitCorrelogramWidget extends Component {
+    static title = 'Correlogram waveform of sorting unit'
     static reactopyaConfig = config
     constructor(props) {
         super(props);
@@ -39,7 +39,6 @@ export default class SortingUnitTemplateWidget extends Component {
         const plot = this.state.plot;
         if (plot) {
             if (!this.renderedPlots[plot.id]) {
-                console.log(plot.object);
                 let fig = mpld3.draw_figure(plot.id, plot.object);
                 fig.toolbar.draw = function() {};
                 window.fig=fig;
@@ -65,7 +64,7 @@ export default class SortingUnitTemplateWidget extends Component {
                 <div
                     id={plot.id}
                     key={plot.id}
-                    className={"hide-xaxis hide-yaxis"}
+                    // className={"hide-xaxis hide-yaxis"}
                     style={{width: this.props.width, height: this.props.height}}
                 />
             );

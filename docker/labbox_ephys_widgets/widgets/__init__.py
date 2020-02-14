@@ -7,3 +7,4 @@ from .SortingView import SortingView
 from .SortingUnitView import SortingUnitView
 from .SortingUnitTemplateWidget import SortingUnitTemplateWidget
 from .SortingUnitBox import SortingUnitBox
+from .SortingUnitCorrelogramWidget import SortingUnitCorrelogramWidget

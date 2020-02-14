@@ -69,6 +69,24 @@
             "unitId": 1
         }
     },
+    "widget_suc": {
+        "type": "SortingUnitCorrelogramWidget",
+        "props": {
+            "sorting": {
+                "recording_id": "sf:paired_boyden32c/1103_1_1",
+                "recording_path": "sha1://0c89b66696ff92e529d97a31fe41af7949111a9a/PAIRED_BOYDEN/paired_boyden32c/1103_1_1.json",
+                "sorting_path": "sha1://fe3f7c918200ffe44db7759911e80978540d5201/PAIRED_BOYDEN/paired_boyden32c/1103_1_1.firings_true.json",
+                "sorting_name": "truth",
+                "sorting_id": "sf:paired_boyden32c/1103_1_1::truth",
+                "unit_ids": [
+                    1
+                ]
+            },
+            "unitId": 1,
+            "width": 250,
+            "height": 250
+        }
+    },
     "widget_ss": {
         "type": "SortingsView",
         "props": {}

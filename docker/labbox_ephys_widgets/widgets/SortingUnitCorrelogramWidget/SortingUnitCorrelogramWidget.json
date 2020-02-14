@@ -1,0 +1,6 @@
+{
+    "project_name": "labbox_ephys_widgets",
+    "type": "SortingUnitCorrelogramWidget",
+    "description": "Correlogram plot for a sorting result unit",
+    "defaultProps": {}
+}
