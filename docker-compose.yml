@@ -18,6 +18,7 @@ services:
       - MONGO_PASSWORD
       - MONGO_PORT=27017
       - JUPYTERLAB_PORT
+      - KILL_CODE=${LABBOX_EPHYS_KILL_CODE}
     user: "${USER_ID}:${GROUP_ID}"
     command: "reactopya-server /app/app.json --port 8080"
   jupyter:

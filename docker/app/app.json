@@ -24,8 +24,5 @@
             "name": "sortingview",
             "pyFile": "sortingview.py"
         }
-    ],
-    "killCode": {
-        "env": "LABBOX_EPHYS_KILL_CODE"
-    }
+    ]
 }

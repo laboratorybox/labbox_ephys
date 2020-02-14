@@ -20,3 +20,5 @@ export MONGO_PORT=27017
 
 export JUPYTERLAB_PORT=8888
 export JUPYTERLAB_TOKEN=secret-token
+
+export LABBOX_EPHYS_KILL_CODE=killcode
