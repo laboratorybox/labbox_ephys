@@ -91,3 +91,6 @@ From within JupyterLab, open the `example_notebooks/example_local_import.ipynb` 
 
 Once the recordings are imported, you can then go back to the main labbox_ephys page and click on the "View recordings" link. You should then be able to see the imported recordings.
 
+## Flatiron probe file format (.json)
+ 
+See [probe_files/README.md](probe_files/README.md)
