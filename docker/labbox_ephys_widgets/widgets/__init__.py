@@ -6,3 +6,4 @@ from .TestMpld3Widget import TestMpld3Widget
 from .SortingView import SortingView
 from .SortingUnitView import SortingUnitView
 from .SortingUnitTemplateWidget import SortingUnitTemplateWidget
+from .SortingUnitBox import SortingUnitBox

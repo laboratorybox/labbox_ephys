@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
+import './mpld3_custom.css';
 const config = require('./SortingUnitTemplateWidget.json');
 const d3 = require('./d3.min.js');
 console.log('d3=', d3);
@@ -38,14 +39,17 @@ export default class SortingUnitTemplateWidget extends Component {
         const plot = this.state.plot;
         if (plot) {
             if (!this.renderedPlots[plot.id]) {
-                mpld3.draw_figure(plot.id, plot.object);
+                console.log(plot.object);
+                let fig = mpld3.draw_figure(plot.id, plot.object);
+                fig.toolbar.draw = function() {};
+                window.fig=fig;
                 this.renderedPlots[plot.id] = true;
             }
         }
     }
     update() {
         this.pythonInterface.setState({
-            figsize: [2, 2],
+            figsize: [this.props.width, this.props.height],
             sorting: this.props.sorting,
             unit_id: this.props.unitId
         });
@@ -56,10 +60,21 @@ export default class SortingUnitTemplateWidget extends Component {
     render() {
         const plot = this.state.plot;
         if (plot) {
-            return <div id={plot.id} key={plot.id} />;
+            return (
+                <div
+                    id={plot.id}
+                    key={plot.id}
+                    className={"hide-xaxis hide-yaxis"}
+                    style={{width: this.props.width, height: this.props.height}}
+                />
+            );
         }
         else {
-            return <span>Loading...</span>;
+            return (
+                <div
+                    style={{width: this.props.width, height: this.props.height, background: 'rgb(230, 230, 235)'}}
+                />
+            );
         }
     }
 }

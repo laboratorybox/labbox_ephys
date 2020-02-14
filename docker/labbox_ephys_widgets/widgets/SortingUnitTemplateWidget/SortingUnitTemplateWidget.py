@@ -2,31 +2,50 @@ import random
 import spikewidgets as sw
 import spiketoolkit as st
 from labbox_ephys import AutoRecordingExtractor, AutoSortingExtractor
+from labbox_ephys.utils import compute_unit_templates, plot_spike_waveform
+import matplotlib as mpl
+mpl.use('Agg') # This is important for speed!
+import matplotlib.pyplot as plt
+import mpld3
+import time
 
 class SortingUnitTemplateWidget:
     def __init__(self):
         super().__init__()
 
     def javascript_state_changed(self, prev_state, state):
+        timer = time.time()
+        print(timer-0)
+
         self._set_status('running', 'Running SortingUnitTemplateWidget')
 
         sorting = state['sorting']
         unit_id = state['unit_id']
         figsize = state['figsize']
 
-        import matplotlib.pyplot as plt, mpld3
-        f = plt.figure(figsize=figsize)
         R = AutoRecordingExtractor(sorting['recording_path'])
         S = AutoSortingExtractor(sorting['sorting_path'])
-        template = st.postprocessing.get_unit_templates(
-            recording=R, sorting=S, unit_ids=[unit_id],
-            mode='median',
-            max_spikes_per_unit=200,
-            ms_before=1, ms_after=1,
+
+        filtopts = dict(
+            freq_min=300,
+            freq_max=6000,
+            freq_wid=1000
+        )
+        template = compute_unit_templates(
+            recording=R, sorting=S,
+            unit_ids=[unit_id],
+            ms_before=2, ms_after=2,
+            max_spikes_per_unit=100,
+            filtopts=filtopts
         )[0]
 
-        plt.plot(template.T)
+        f = plt.figure(figsize=[figsize[0]/100, figsize[1]/100], dpi=100)        
+        plot_spike_waveform(template, spacing='auto', amp_scale_factor=2)
+        # plt.title(f'Unit {unit_id}')
         x = mpld3.fig_to_dict(f)
+        # here's how you would disable the menu button plugins:
+        x['plugins'] = []
+
 
         self._set_state(
             plot=dict(
@@ -34,6 +53,8 @@ class SortingUnitTemplateWidget:
                 object=x
             )
         )
+
+        # print(f'Elapsed: {time.time() - timer} sec')
 
         self._set_status('finished', 'Finished SortingUnitTemplateWidget')
 

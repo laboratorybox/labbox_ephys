@@ -1,0 +1,6 @@
+{
+    "project_name": "labbox_ephys_widgets",
+    "type": "SortingUnitBox",
+    "description": "Box view of a unit in a sorting result",
+    "defaultProps": {}
+}

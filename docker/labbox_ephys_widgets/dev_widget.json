@@ -1,20 +1,39 @@
 {
     "widget_t": {
         "type": "TestMpld3Widget",
-        "props": {
-        }
+        "props": {}
     },
     "widget_r": {
         "type": "RecordingsView",
-        "props": {
-        }
+        "props": {}
     },
     "widget": {
         "type": "SortingView",
         "props": {
-            "sortingId": "sf:synth_magland_noise10_K10_C4/001_synth::truth"
+            "sorting": {
+                "recording_id": "sf:synth_magland_noise10_K10_C4/001_synth",
+                "recording_path": "sha1://ee5214337b2e01910a92c3613a4b8ad4be4dc476/SYNTH_MAGLAND/synth_magland_noise10_K10_C4/001_synth.json",
+                "sorting_path": "sha1://ff64f1713227c017052bf21b41ddf764320aa606/SYNTH_MAGLAND/synth_magland_noise10_K10_C4/001_synth.firings_true.json",
+                "sorting_name": "truth",
+                "sorting_id": "sf:synth_magland_noise10_K10_C4/001_synth::truth",
+                "unit_ids": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ]
+            }
         },
         "props2": {
+            "sortingId": "sf:synth_magland_noise10_K10_C4/001_synth::truth"
+        },
+        "props3": {
             "sortingId": "sf:paired_boyden32c/1103_1_1::truth"
         }
     },
@@ -52,13 +71,10 @@
     },
     "widget_ss": {
         "type": "SortingsView",
-        "props": {
-        }
+        "props": {}
     },
     "widget_m": {
         "type": "MainWidget",
-        "props": {
-            
-        }
+        "props": {}
     }
 }

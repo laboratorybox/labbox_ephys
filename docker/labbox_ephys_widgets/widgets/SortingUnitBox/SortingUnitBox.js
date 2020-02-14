@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
 import SortingUnitTemplateWidget from '../SortingUnitTemplateWidget/SortingUnitTemplateWidget';
-import "./SortingUnitView.css";
-const config = require('./SortingUnitView.json');
+import "./SortingUnitBox.css";
+const config = require('./SortingUnitBox.json');
 
-export default class SortingUnitView extends Component {
+export default class SortingUnitBox extends Component {
     static title = 'View a unit in a sorting result'
     static reactopyaConfig = config
     constructor(props) {
@@ -62,8 +62,8 @@ export default class SortingUnitView extends Component {
                     unitId={unitId}
                     reactopyaParent={this}
                     reactopyaChildId="SortingUnitTemplateWidget"
-                    width={300}
-                    height={800}
+                    width={this.props.width}
+                    height={this.props.height}
                 />
             </div>
         )

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
-import { Table, TableHead, TableBody, TableRow, TableCell, Link, Checkbox } from '@material-ui/core';
+import { Table, TableHead, TableBody, TableRow, TableCell, Link, Checkbox, Box } from '@material-ui/core';
 import LBTable from './LBTable';
 import SortingUnitView from '../SortingUnitView/SortingUnitView';
+import SortingUnitBox from '../SortingUnitBox/SortingUnitBox';
 const config = require('./SortingView.json');
 
 export default class SortingView extends Component {
@@ -13,8 +14,8 @@ export default class SortingView extends Component {
         this.state = {
             // javascript state
             sortingId: '',
-            selectedUnitIds: {},
-            
+            selectedUnitId: null,
+
             // python state
             sorting: null,
             status: '',
@@ -43,11 +44,11 @@ export default class SortingView extends Component {
     componentWillUnmount() {
         this.pythonInterface.stop();
     }
-    _handleSelectedUnitIdsChanged = (ids) => {
-        this.setState({selectedUnitIds: ids});
+    _handleUnitClicked = (uid) => {
+        this.setState({selectedUnitId: uid});
     }
     render() {
-        const { sorting, selectedUnitIds } = this.state;
+        const { sorting, selectedUnitId } = this.state;
 
         if (!sorting) {
             return (
@@ -55,27 +56,43 @@ export default class SortingView extends Component {
             );
         }
 
-        const selectedUnitIdsList = Object.keys(selectedUnitIds);
-        let selectedUnitId = null;
-        if (selectedUnitIdsList.length === 1)
-            selectedUnitId = parseInt(selectedUnitIdsList[0]);
+        const unit_ids = sorting.unit_ids;
+
         return (
             <div>
                 <SortingViewTable
                     sorting={sorting}
                 />
-                <SortingUnitsTable
+                {/* <SortingUnitsTable
                     sorting={sorting}
                     selectedUnitIds={selectedUnitIds}
                     onSelectedUnitIdsChanged={(ids) => {this._handleSelectedUnitIdsChanged(ids)}}
-                />
+                /> */}
+                <Box display="flex" flexDirection="row" p={1} m={1} style={{overflowX: 'auto'}}>
+                    {
+                        unit_ids.map((uid) => (
+                            <Box p={1}>
+                                <SortingUnitBox
+                                    sorting={sorting}
+                                    unitId={uid}
+                                    reactopyaParent={this}
+                                    reactopyaChildId={`SortingUnitView-${uid}`}
+                                    onClick={() => {this._handleUnitClicked(uid)}}
+                                    width={150}
+                                    height={300}
+                                    selected={(uid == selectedUnitId)}
+                                />
+                            </Box>
+                        ))
+                    }
+                </Box>
                 {
                     selectedUnitId !== null ? (
                         <SortingUnitView
                             sorting={sorting}
                             unitId={selectedUnitId}
                             reactopyaParent={this}
-                            reactopyaChildId="SortingUnitView"
+                            reactopyaChildId={`SortingUnitView`}
                         />
                     ) : <span />
                 }
@@ -118,18 +135,18 @@ class SortingUnitsTable extends Component {
     render() {
         const { sorting, selectedUnitIds, onSelectedUnitIdsChanged } = this.props;
         const unit_ids = sorting.unit_ids;
-        let columns = [{label: 'Unit', id: 'unit'}];
+        let columns = [{ label: 'Unit', id: 'unit' }];
         let rows = unit_ids.map((id) => (
-            {id: id, cells: {unit: {content: id}}}
+            { id: id, cells: { unit: { content: id } } }
         ));
         return (
-            <div style={{width: 180, height: 250, overflow: 'auto'}}>
+            <div style={{ width: 180, height: 250, overflow: 'auto' }}>
                 <LBTable
                     columns={columns}
                     rows={rows}
                     rowSelectionMode="single"
                     selectedRowIds={selectedUnitIds}
-                    onSelectedRowIdsChanged={(ids) => {onSelectedUnitIdsChanged(ids)}}
+                    onSelectedRowIdsChanged={(ids) => { onSelectedUnitIdsChanged(ids) }}
                 />
             </div>
         );
