@@ -15,7 +15,6 @@ class SortingUnitTemplateWidget:
 
     def javascript_state_changed(self, prev_state, state):
         timer = time.time()
-        print(timer-0)
 
         self._set_status('running', 'Running SortingUnitTemplateWidget')
 

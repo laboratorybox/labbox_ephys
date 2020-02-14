@@ -2,3 +2,18 @@
     background-color: transparent;
     border: solid 1px lightgray;
 }
+
+.SortingUnitView:hover {
+    background-color: rgb(230, 230, 250);
+    border: solid 1px gray;
+}
+
+.SortingUnitView.selected {
+    background-color: rgb(250, 250, 200);
+    border: solid 1px black;
+}
+
+.SortingUnitView.selected:hover {
+    background-color: rgb(250, 250, 150);
+    border: solid 1px black;
+}
