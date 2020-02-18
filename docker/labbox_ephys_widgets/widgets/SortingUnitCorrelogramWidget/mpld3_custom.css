@@ -1,0 +1,11 @@
+.hide-xaxis g.mpld3-xaxis {
+    display: none;
+}
+
+.hide-yaxis g.mpld3-yaxis {
+    display: none;
+}
+
+rect.mpld3-axesbg {
+    fill: rgba(255, 255, 255, 0.2) !important;
+}

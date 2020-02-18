@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
 import SortingUnitTemplateWidget from '../SortingUnitTemplateWidget/SortingUnitTemplateWidget';
+import SortingUnitCorrelogramWidget from '../SortingUnitCorrelogramWidget/SortingUnitCorrelogramWidget';
 import "./SortingUnitView.css";
+import { Box } from '@material-ui/core';
 const config = require('./SortingUnitView.json');
 
 export default class SortingUnitView extends Component {
@@ -57,14 +59,24 @@ export default class SortingUnitView extends Component {
                 onClick={this.props.onClick || function() {}}
             >
                 <h3 style={{textAlign: "center"}}>Unit {unitId}</h3>
-                <SortingUnitTemplateWidget
-                    sorting={sorting}
-                    unitId={unitId}
-                    reactopyaParent={this}
-                    reactopyaChildId="SortingUnitTemplateWidget"
-                    width={300}
-                    height={800}
-                />
+                <Box display="flex" flexDirection="row" p={2} m={2}>
+                    <SortingUnitTemplateWidget
+                        sorting={sorting}
+                        unitId={unitId}
+                        reactopyaParent={this}
+                        reactopyaChildId="SortingUnitTemplateWidget"
+                        width={300}
+                        height={300}
+                    />
+                    <SortingUnitCorrelogramWidget
+                        sorting={sorting}
+                        unitId={unitId}
+                        reactopyaParent={this}
+                        reactopyaChildId="SortingUnitCorrelogramWidget"
+                        width={300}
+                        height={300}
+                    />
+                </Box>
             </div>
         )
     }

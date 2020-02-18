@@ -11,9 +11,9 @@
 |`probe_name` |[Probe name]-[Manufacturer acronym] |string |int128-8dbc |
 |`probe_type` |Probe type: {"siprobe", "mea", "tetrode", "monotrode"} |string |"siprobe" |
 |`channel` |Channel numbers in the recording file |array: num_site x 1| [0,1,2,3...]
-|`x` |x-position of sites in micrometer |array: num_site x 1| [0,25,50,75,...]
-|`y` |x-position of sites in micrometer |array: num_site x 1| [0,25,50,75,...]
-|`z` |x-position of sites in micrometer |array: num_site x 1| [0,25,50,75,...]
+|`x` |X-position of sites in micrometer |array: num_site x 1| [0,25,50,75,...]
+|`y` |Y-position (parallel to the probe axis) of sites in micrometer |array: num_site x 1| [0,25,50,75,...]
+|`z` |Z-position (normal to the probe surface) of sites in micrometer |array: num_site x 1| [0,25,50,75,...]
 |`group`| Shank group numbers for each site | array: num_site x 1| [0,0,0,0,...]
 |`site_width`| width of all sites in micrometers | scalar | 11
 |`site_height`| height of all sites in micrometers |scalar | 15

@@ -85,6 +85,9 @@ class AutoSortingExtractor(se.SortingExtractor):
     def get_sampling_frequency(self):
         return self._sorting.get_sampling_frequency()
     
+    def set_sampling_frequency(self, freq):
+        self._sorting.set_sampling_frequency(freq)
+    
     @staticmethod
     def write_sorting(sorting, save_path):
         MdaSortingExtractor.write_sorting(sorting=sorting, save_path=save_path)
