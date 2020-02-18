@@ -7,7 +7,7 @@
         "type": "RecordingsView",
         "props": {}
     },
-    "widget": {
+    "widget_sv": {
         "type": "SortingView",
         "props": {
             "sorting": {
@@ -35,6 +35,27 @@
         },
         "props3": {
             "sortingId": "sf:paired_boyden32c/1103_1_1::truth"
+        }
+    },
+    "widget_rv": {
+        "type": "RecordingView",
+        "props2": {
+            "recording": {
+                "recording_id": "sf:synth_magland_noise10_K10_C4/001_synth",
+                "recording_path": "sha1://ee5214337b2e01910a92c3613a4b8ad4be4dc476/SYNTH_MAGLAND/synth_magland_noise10_K10_C4/001_synth.json"
+            }
+        },
+        "props": {
+            "recordingId": "local:128chan_sampleCA1"
+        }
+    },
+    "widget": {
+        "type": "TimeseriesView",
+        "props": {
+            "recording": {
+                "path": "sha1dir://80b58d66a95546365f2803993794f6cb7d7d31f8.128chan_sampleCA1"
+            },
+            "group": 0
         }
     },
     "widget_su": {

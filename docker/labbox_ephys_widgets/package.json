@@ -4,6 +4,8 @@
         "@material-ui/core": "^4.2.0",
         "@material-ui/icons": "^4.2.1",
         "@material-ui/styles": "^4.2.0",
+        "canvas2svg": "^1.0.16",
+        "react-draggable": "^4.2.0",
         "react-icons": "^3.7.0"
     }
 }

@@ -53,8 +53,10 @@ class AutoRecordingExtractor(se.RecordingExtractor):
                         self._recording = MdaRecordingExtractor(timeseries_path=obj['raw'], samplerate=obj['params']['samplerate'], geom=np.array(obj['geom']), download=download)
                     else:
                         raise Exception('Problem initializing recording extractor')
-                elif ka.get_file_info(path + '/raw.mda'):
-                    self._recording = MdaRecordingExtractor(recording_directory=path, download=download)
+                elif can_load_mda(path):
+                    self._recording = MdaRecordingExtractor(path, download=download)
+                elif can_load_nrs(path):
+                    self._recording = NrsRecordingExtractor(path)
                 else:
                     raise Exception('Unable to initialize recording extractor. Unable to determine format of recording: {}'.format(path))
         self.copy_channel_properties(recording=self._recording)
@@ -100,30 +102,111 @@ class AutoRecordingExtractor(se.RecordingExtractor):
     def get_traces(self, channel_ids=None, start_frame=None, end_frame=None):
         return self._recording.get_traces(channel_ids=channel_ids, start_frame=start_frame, end_frame=end_frame)
 
-# class NeuroscopeRecordingExtractor(se.RecordingExtractor):
-#     extractor_name = 'NeuroscopeRecordingExtractor'
-#     is_writable = False
-#     def __init__(self, dirpath):
-#         x = ka.read_dir(dirpath)
-#         xml_fname = None
-#         for name, f in x['files']:
-#             if name.endswith('.xml'):
-#                 xml_fname = dirpath + '/' + name
-#         if xml_fname is None:
-#             raise Exception('No .xml file in directory.')
+    @staticmethod
+    def can_load_dir(path):
+        if can_load_mda(path):
+            return True
+        if can_load_nrs(path):
+            return True
+        return False
 
-#         from xml.etree import ElementTree as ET
-#         xml = ET.parse(xml_fname)
-#         root_element = xml.getroot()
-#         try:
-#             self._samplerate = float(root_element.find('acquisitionSystem/samplingRate').text)
-#         except:
-#             raise Exception('Unable to load acquisitionSystem/samplingRate')
-#         try:
-#             self._nChannels = float(root_element.find('acquisitionSystem/nChannels').text)
-#         except:
-#             raise Exception('Unable to load acquisitionSystem/nChannels')
-    
+def can_load_mda(path):
+    dd = ka.read_dir(path)
+    if 'raw.mda' in dd['files'] and 'params.json' in dd['files'] and 'geom.csv' in dd['files']:
+        return True
+    return False
+
+def check_load_nrs(recording_path):
+    dd = ka.read_dir(recording_path)
+    probe_file = None
+    xml_file = None
+    nrs_file = None
+    dat_file = None
+    for f in dd['files'].keys():
+        if f.endswith('.json'):
+            obj = ka.load_object(recording_path + '/' + f)
+            if obj.get('format_version', None) == 'flatiron-probe-0.1':
+                probe_file = recording_path + '/' + f
+        elif f.endswith('.xml'):
+            xml_file = recording_path + '/' + f
+        elif f.endswith('.nrs'):
+            nrs_file = recording_path + '/' + f
+        elif f.endswith('.dat'):
+            dat_file = recording_path + '/' + f
+    if probe_file is not None and xml_file is not None and nrs_file is not None and dat_file is not None:
+        info = dict(
+            probe_file=probe_file,
+            xml_file=xml_file,
+            nrs_file=nrs_file,
+            dat_file=dat_file
+        )
+        return info
+    return None
+
+def can_load_nrs(recording_path):
+    info = check_load_nrs(recording_path)
+    return (info is not None)
+
+class NrsRecordingExtractor(se.RecordingExtractor):
+    extractor_name = 'NrsRecordingExtractor'
+    is_writable = False
+    def __init__(self, dirpath):
+        se.RecordingExtractor.__init__(self)
+        info = check_load_nrs(dirpath)
+        assert info is not None
+        probe_obj = ka.load_object(info['probe_file'])
+        xml_file = ka.load_file(info['xml_file'])
+        # nrs_file = ka.load_file(info['nrs_file'])
+        dat_file = ka.load_file(info['dat_file'])
+
+        from xml.etree import ElementTree as ET
+        xml = ET.parse(xml_file)
+        root_element = xml.getroot()
+        try:
+            self._samplerate = float(root_element.find('acquisitionSystem/samplingRate').text)
+        except:
+            raise Exception('Unable to load acquisitionSystem/samplingRate')
+        try:
+            self._nChannels = int(root_element.find('acquisitionSystem/nChannels').text)
+        except:
+            raise Exception('Unable to load acquisitionSystem/nChannels')
+        try:
+            self._nBits = int(root_element.find('acquisitionSystem/nBits').text)
+        except:
+            raise Exception('Unable to load acquisitionSystem/nBits')
+
+        if self._nBits == 16:
+            dtype = np.int16
+        elif self._nBits == 32:
+            dtype = np.int32
+        else:
+            raise Exception(f'Unexpected nBits: {self._nBits}')
+
+        self._rec = se.BinDatRecordingExtractor(dat_file, sampling_frequency=self._samplerate, numchan=self._nChannels, dtype=dtype)
+
+        self._channel_ids = probe_obj['channel']
+        for ii in range(len(probe_obj['channel'])):
+            channel = probe_obj['channel'][ii]
+            x = probe_obj['x'][ii]
+            y = probe_obj['y'][ii]
+            z = probe_obj['z'][ii]
+            group = probe_obj.get('group', probe_obj.get('shank'))[ii]
+            self.set_channel_property(channel, 'location', [x, y, z])
+            self.set_channel_property(channel, 'group', group)
+
+    def get_channel_ids(self):
+        return self._channel_ids
+
+    def get_num_frames(self):
+        return self._rec.get_num_frames()
+
+    def get_sampling_frequency(self):
+        return self._rec.get_sampling_frequency()
+
+    def get_traces(self, channel_ids=None, start_frame=None, end_frame=None):
+        if channel_ids is None:
+            channel_ids = self._channel_ids
+        return self._rec.get_traces(channel_ids=channel_ids, start_frame=start_frame, end_frame=end_frame)
 
 class NwbJsonRecordingExtractor(se.RecordingExtractor):
     extractor_name = 'NwbJsonRecordingExtractor'

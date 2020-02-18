@@ -8,3 +8,6 @@ export { default as SortingUnitView } from './SortingUnitView/SortingUnitView';
 export { default as SortingUnitTemplateWidget } from './SortingUnitTemplateWidget/SortingUnitTemplateWidget';
 export { default as SortingUnitBox } from './SortingUnitBox/SortingUnitBox';
 export { default as SortingUnitCorrelogramWidget } from './SortingUnitCorrelogramWidget/SortingUnitCorrelogramWidget';
+export { default as RecordingView } from './RecordingView/RecordingView';
+export { default as TimeseriesView } from './TimeseriesView/TimeseriesView';
+export { default as ElectrodeGeometry } from './ElectrodeGeometry/ElectrodeGeometry';

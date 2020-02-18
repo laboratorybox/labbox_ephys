@@ -8,3 +8,6 @@ from .SortingUnitView import SortingUnitView
 from .SortingUnitTemplateWidget import SortingUnitTemplateWidget
 from .SortingUnitBox import SortingUnitBox
 from .SortingUnitCorrelogramWidget import SortingUnitCorrelogramWidget
+from .RecordingView import RecordingView
+from .TimeseriesView import TimeseriesView
+from .ElectrodeGeometry import ElectrodeGeometry

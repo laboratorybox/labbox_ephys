@@ -3,7 +3,7 @@
 
 import argparse
 import spikeforest_widgets as sw
-from spikeforest2_utils import AutoRecordingExtractor
+from labbox_ephys import AutoRecordingExtractor
 import kachery as ka
 
 sw.init_electron()
