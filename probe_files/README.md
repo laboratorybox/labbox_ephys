@@ -7,12 +7,13 @@
   
 |Field name |Description |Format |Example |
 |----|----|----|----|
-|`format_version` |Name of the probe format and version |string |"flatiron-probe-0.1" |
+|`format_version` |Name of the probe format and version |string |"flatiron-probe-0.2" |
 |`probe_name` |[Probe name]-[Manufacturer acronym] |string |int128-8dbc |
+|`probe_type` |Probe type: {"siprobe", "mea", "tetrode", "monotrode"} |string |"siprobe" |
 |`channel` |Channel numbers in the recording file |array: num_site x 1| [0,1,2,3...]
 |`x` |x-position of sites in micrometer |array: num_site x 1| [0,25,50,75,...]
 |`y` |x-position of sites in micrometer |array: num_site x 1| [0,25,50,75,...]
 |`z` |x-position of sites in micrometer |array: num_site x 1| [0,25,50,75,...]
-|`shank`| Shank numbers for each site | array: num_site x 1| [0,0,0,0,...]
+|`group`| Shank group numbers for each site | array: num_site x 1| [0,0,0,0,...]
 |`site_width`| width of all sites in micrometers | scalar | 11
 |`site_height`| height of all sites in micrometers |scalar | 15
