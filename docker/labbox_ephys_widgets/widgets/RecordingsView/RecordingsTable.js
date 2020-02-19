@@ -24,7 +24,7 @@ export default class RecordingsTable extends Component {
             {
                 id: rec.recording_id,
                 cells: {
-                    recording: {content: rec.recording_id, href: `timeseriesview?path=${rec.recording_path}`, target: '_blank'},
+                    recording: {content: rec.recording_id, href: `recordingview?recording_id=${rec.recording_id}`, target: '_blank'},
                     nchan: {content: rec.channel_ids.length},
                     sampfreq: {content: rec.sampling_frequency},
                     duration: {content: (rec.num_frames / rec.sampling_frequency)}
