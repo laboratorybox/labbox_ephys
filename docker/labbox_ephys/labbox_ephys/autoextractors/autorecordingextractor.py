@@ -53,7 +53,7 @@ class AutoRecordingExtractor(se.RecordingExtractor):
                     else:
                         raise Exception('Problem initializing recording extractor')
                 elif can_load_mda(path):
-                    self._recording = MdaRecordingExtractor(path, download=download)
+                    self._recording = MdaRecordingExtractor(recording_directory=path, download=download)
                 elif can_load_nrs(path):
                     self._recording = NrsRecordingExtractor(path)
                 else:
