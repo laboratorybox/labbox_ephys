@@ -26,7 +26,6 @@ class AutoRecordingExtractor(se.RecordingExtractor):
                 self._recording = self._apply_filters(recording1, arg['filters'])
             elif ('raw' in arg) and ('params' in arg) and ('geom' in arg):
                 self._recording = MdaRecordingExtractor(timeseries_path=arg['raw'], samplerate=arg['params']['samplerate'], geom=np.array(arg['geom']), download=download)
-                return
             else:
                 path = arg.get('path', '')
                 if not path:
@@ -59,6 +58,17 @@ class AutoRecordingExtractor(se.RecordingExtractor):
                     self._recording = NrsRecordingExtractor(path)
                 else:
                     raise Exception('Unable to initialize recording extractor. Unable to determine format of recording: {}'.format(path))
+            if 'group' in arg:
+                R = self._recording
+                channel_ids = np.array(R.get_channel_ids())
+                groups = R.get_channel_groups(channel_ids=R.get_channel_ids())
+                group = int(arg['group'])
+                inds = np.where(np.array(groups) == group)[0]
+                channel_ids = channel_ids[inds]
+                self._recording = se.SubRecordingExtractor(
+                    parent_recording=R,
+                    channel_ids=np.array(channel_ids)
+                )
         self.copy_channel_properties(recording=self._recording)
     
     def _apply_filters(self, recording, filters):

@@ -23,6 +23,10 @@
         {
             "name": "sortingview",
             "pyFile": "sortingview.py"
+        },
+        {
+            "name": "recordingview",
+            "pyFile": "recordingview.py"
         }
     ]
 }

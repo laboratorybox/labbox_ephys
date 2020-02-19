@@ -53,9 +53,9 @@
         "type": "TimeseriesView",
         "props": {
             "recording": {
-                "path": "sha1dir://80b58d66a95546365f2803993794f6cb7d7d31f8.128chan_sampleCA1"
-            },
-            "group": 0
+                "path": "sha1dir://80b58d66a95546365f2803993794f6cb7d7d31f8.128chan_sampleCA1",
+                "group": 0
+            }
         }
     },
     "widget_su": {
