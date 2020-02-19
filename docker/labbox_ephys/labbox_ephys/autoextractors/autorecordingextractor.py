@@ -135,7 +135,7 @@ def check_load_nrs(recording_path):
     for f in dd['files'].keys():
         if f.endswith('.json'):
             obj = ka.load_object(recording_path + '/' + f)
-            if obj.get('format_version', None) == 'flatiron-probe-0.1':
+            if obj.get('format_version', None) in ['flatiron-probe-0.1', 'flatiron-probe-0.2']:
                 probe_file = recording_path + '/' + f
         elif f.endswith('.xml'):
             xml_file = recording_path + '/' + f
