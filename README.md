@@ -77,7 +77,11 @@ Open Google Chrome and enter the following URL (The 8080 should be consistent wi
 http://localhost:8080/app/labbox_ephys
 ```
 
-If everything worked, you should see some content in the browser
+If everything worked, you should see some content in the browser.
+
+### Step 5. Connect from a different computer within the internal network
+
+Depending on your network configuration, you should be able to connect from a different computer within your internal network by replacing localhost above by the ip address of the linux box running the server.
 
 ## Importing recordings
 
