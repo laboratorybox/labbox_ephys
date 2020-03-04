@@ -33,7 +33,7 @@ git pull
 
 ### Step 2. Configuration
 
-Set the following environment variables in your `.bashrc` file:
+Set the following environment variables at the bottom of your `~/.bashrc` file:
 
 ```
 # A directory where the system will store large temporary files.
