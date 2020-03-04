@@ -7,7 +7,7 @@ setuptools.setup(
     version="0.1.0",
     author="Jeremy Magland",
     author_email="jmagland@flatironinstitute.org",
-    description="Python functions for labbox_ephys",
+    description="Python package for labbox_ephys",
     packages=setuptools.find_packages(),
     scripts=[],
     install_requires=[

@@ -44,9 +44,8 @@ class _MongoClient:
 
 _global_client = _MongoClient()
 
-_mongo_host = os.getenv('MONGO_HOST', 'localhost')
 _global_config = dict(
-    url=f"mongodb://{os.environ['MONGO_USER']}:{os.environ['MONGO_PASSWORD']}@{_mongo_host}:{os.environ['MONGO_PORT']}",
+    url=os.getenv('MONGO_URI'),
     database='labbox'
 )
 

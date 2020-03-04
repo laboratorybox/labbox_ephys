@@ -1,3 +1,9 @@
+[![Build Status](https://travis-ci.org/laboratorybox/labbox_ephys.svg?branch=master)](https://travis-ci.org/laboratorybox/labbox_ephys)
+[![codecov](https://codecov.io/gh/laboratorybox/labbox_ephys/branch/master/graph/badge.svg)](https://codecov.io/gh/laboratorybox/labbox_ephys)
+
+[![license](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Python](https://img.shields.io/badge/python-%3E=3.6-blue.svg)
+
 # Labbox-ephys
 
 Browser-based visualization of ephys data

@@ -57,8 +57,9 @@ WORKDIR /src/labbox_ephys_widgets
 RUN reactopya install && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && rm -rf /tmp/* && yarn cache clean
 
 ### Install labbox_ephys
-COPY labbox_ephys /src/labbox_ephys
+COPY labbox_ephys /src/labbox_ephys/labbox_ephys
+COPY setup.py /src/labbox_ephys/setup.py
 WORKDIR /src/labbox_ephys
 RUN pip install .
 
-COPY app /app
+COPY labbox_ephys_widgets/app /app

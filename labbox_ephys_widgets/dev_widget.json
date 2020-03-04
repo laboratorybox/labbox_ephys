@@ -49,7 +49,7 @@
             "recordingId": "local:128chan_sampleCA1"
         }
     },
-    "widget": {
+    "widget_ts": {
         "type": "TimeseriesView",
         "props": {
             "recording": {
@@ -112,7 +112,7 @@
         "type": "SortingsView",
         "props": {}
     },
-    "widget_m": {
+    "widget": {
         "type": "MainWidget",
         "props": {}
     }

@@ -1,0 +1,46 @@
+version: "3"
+services:
+  gui: # The main GUI app
+    image: labbox_ephys:latest
+    ports:
+      - "${LABBOX_EPHYS_PORT}:8080"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/tmp:/tmp"
+      - "../example_notebooks:/data/example_notebooks:ro"
+      - "${KACHERY_STORAGE_DIR}:/kachery-storage"
+      - "${LABBOX_EPHYS_DATA_DIR}:/data/local-data"
+      - "${LABBOX_EPHYS_HOME}:/home/labbox:cached"
+    environment:
+      - KACHERY_STORAGE_DIR=/kachery-storage
+      - MONGO_URI=mongodb://mongodb:27017
+      - JUPYTERLAB_PORT=${LABBOX_EPHYS_JUPYTERLAB_PORT}
+      - KILL_CODE=${LABBOX_EPHYS_KILL_CODE}
+      - HOME=/home/labbox
+    user: "${USER_ID}:${GROUP_ID}"
+    command: "reactopya-server /app/app.json --port 8080"  
+  jupyterlab: # Jupyter lab server
+    image: labbox_ephys:latest
+    ports:
+      - "${LABBOX_EPHYS_JUPYTERLAB_PORT}:8888"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/tmp:/tmp"
+      - "${LABBOX_EPHYS_SOURCE_DIR}/example_notebooks:/data/example_notebooks:ro"
+      - "${KACHERY_STORAGE_DIR}:/kachery-storage"
+      - "${LABBOX_EPHYS_DATA_DIR}:/data/local-data"
+      - "${LABBOX_EPHYS_HOME}:/home/labbox:cached"
+    environment:
+      - KACHERY_STORAGE_DIR=/kachery-storage
+      - JUPYTERLAB_TOKEN
+      - MONGO_URI=mongodb://mongodb:27017
+      - HOME=/home/labbox
+    user: "${USER_ID}:${GROUP_ID}"
+    command: "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/data --NotebookApp.token=''"
+    # command: "ls -l /home"
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    volumes:
+        - ${LABBOX_EPHYS_MONGO_DATA_DIR}:/data/db
