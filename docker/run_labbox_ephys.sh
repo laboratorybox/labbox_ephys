@@ -44,8 +44,8 @@ export USER_ID=`id -u`
 export GROUP_ID=`id -g`
 
 cd ..
-docker build -t labbox_ephys:latest -f docker2/Dockerfile .
-cd docker2
+docker build -t labbox_ephys:latest -f docker/Dockerfile .
+cd docker
 
 docker pull mongo:latest
 docker-compose rm -sf mongodb || true

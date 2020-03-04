@@ -33,35 +33,37 @@ git pull
 
 ### Step 2. Configuration
 
-Copy the example config file to the user file
+Set the following environment variables in your `.bashrc` file:
 
 ```
-cp example_config.user.sh config.user.sh
-```
+# A directory where the system will store large temporary files.
+export KACHERY_STORAGE_DIR=/some/path/to/kachery-storage
 
-Then edit your config.user.sh which should look something like this:
-
-```
-export LOCAL_DATA_DIR=/some/path/to/ephys/data/directory
-export KACHERY_STORAGE_DIR=/some/path/to/kachery/storage/directory
-export MONGO_DATA_DIR=/some/path/to/mongo/data/directory
+# The port you will connect to from your web browser
 export LABBOX_EPHYS_PORT=8080
+
+# The port you will connect to jupyterlab from your web browser
+export LABBOX_EPHYS_JUPYTERLAB_PORT=8891
+
+# A directory where your ephys data are located.
+export LABBOX_EPHYS_DATA_DIR=/some/path/to/local-data
+
+# A directory where the system will store a persistent database
+export LABBOX_EPHYS_MONGO_DATA_DIR=/some/path/to/mongo-data
+
+# A directory where configuration files will be saved
+export LABBOX_EPHYS_HOME=/some/path/to/labbox-home
+
+# The path to the source directory (where you cloned labbox_ephys)
+export LABBOX_EPHYS_SOURCE_DIR=/path/to/the/source/directory/of/labbox_epys
 ```
 
-LOCAL_DATA_DIR is a directory where your ephys data are located.
-
-KACHERY_STORAGE_DIR is a directory where the system will store large temporary files.
-
-MONGO_DATA_DIR is a directory where the system will store a persistent database
-
-LABBOX_EPHYS_PORT is the port you will connect to from your web browser
-
-Other variables may also be set in this file (see `config.default.sh` for more information).
-
+It is important that all of these directories exist and have read/write privileges by the current user.
 
 ### Step 3. Start the services
 
 ```
+cd docker
 ./run_labbox_ephys.sh
 ```
 
