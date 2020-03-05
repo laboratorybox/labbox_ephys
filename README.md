@@ -33,10 +33,10 @@ git pull
 
 ### Step 2. Configuration
 
-Set the following environment variables in your `.bashrc` file:
+Set the following environment variables at the bottom of your `~/.bashrc` file (after editing this file you will either need to log in again or open a new terminal):
 
 ```
-# A directory where the system will store large temporary files.
+# An existing directory where the system will store large temporary files.
 export KACHERY_STORAGE_DIR=/some/path/to/kachery-storage
 
 # The port you will connect to from your web browser
@@ -45,20 +45,20 @@ export LABBOX_EPHYS_PORT=8080
 # The port you will connect to jupyterlab from your web browser
 export LABBOX_EPHYS_JUPYTERLAB_PORT=8891
 
-# A directory where your ephys data are located.
+# An existing directory where your ephys data are located.
 export LABBOX_EPHYS_DATA_DIR=/some/path/to/local-data
 
-# A directory where the system will store a persistent database
+# An existing directory where the system will store a persistent database
 export LABBOX_EPHYS_MONGO_DATA_DIR=/some/path/to/mongo-data
 
-# A directory where configuration files will be saved
+# An existing directory where configuration files will be saved
 export LABBOX_EPHYS_HOME=/some/path/to/labbox-home
 
 # The path to the source directory (where you cloned labbox_ephys)
 export LABBOX_EPHYS_SOURCE_DIR=/path/to/the/source/directory/of/labbox_epys
 ```
 
-It is important that all of these directories exist and have read/write privileges by the current user.
+It is important that all of these directories already exist and have read/write privileges by the current user.
 
 ### Step 3. Start the services
 
@@ -77,7 +77,11 @@ Open Google Chrome and enter the following URL (The 8080 should be consistent wi
 http://localhost:8080/app/labbox_ephys
 ```
 
-If everything worked, you should see some content in the browser
+If everything worked, you should see some content in the browser.
+
+### Step 5. Connect from a different computer within the internal network
+
+Depending on your network configuration, you should be able to connect from a different computer within your internal network by replacing localhost above by the ip address of the linux box running the server.
 
 ## Importing recordings
 
