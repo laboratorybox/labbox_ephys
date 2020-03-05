@@ -64,6 +64,10 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
+# Let the installed vscode extensions persist between rebuilds
+# See: https://code.visualstudio.com/docs/remote/containers-advanced#_avoiding-extension-reinstalls-on-container-rebuild
+RUN mkdir -p /home/$USERNAME/.vscode-server/extensions && chown -R $USERNAME /home/$USERNAME/.vscode-server
+
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
 
@@ -81,6 +85,9 @@ RUN apt-get update && \
     apt-get update && \
     apt-get -y install docker-ce
 
+RUN pip install ipython jupyter jupyterlab
+RUN pip install pymongo
+
 #########################################
 ### Install reactopya
 RUN git clone https://github.com/flatironinstitute/reactopya /src/reactopya \
@@ -94,18 +101,15 @@ RUN pip install --upgrade setuptools
 # for testing display
 RUN apt-get install -y gedit
 
-RUN pip install ipython jupyter jupyterlab
-
 # docker-compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+
+# spikeinterface packages
+RUN pip install spikeextractors==0.7.2 spiketoolkit==0.5.2 spikesorters==0.2.5 spikewidgets==0.3.3
 
 # RUn apt-get install -y libgtk3.0-cil-dev libgtk2.0.0 libnss3-dev libx11-xcb1
 # RUN apt-get install -y libasound2
 # RUN npm install -g electron
-
-# #########################################
-# ### Install spikeinterface packages
-# RUN pip install spiketoolkit==0.5.1 spikewidgets==0.3.2 spikecomparison==0.2.2
 
 # #########################################
 # ### Install spikeforest2

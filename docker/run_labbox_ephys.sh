@@ -51,6 +51,6 @@ docker pull mongo:latest
 docker-compose rm -sf mongodb || true
 docker-compose rm -sf jupyterlab || true
 docker-compose rm -sf gui || true
-docker-compose up --build --abort-on-container-exit
+docker-compose up --build --abort-on-container-exit "$@"
 
 # docker-compose up --abort-on-container-exit jupyterlab

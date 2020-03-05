@@ -43,4 +43,4 @@ services:
     container_name: mongodb
     restart: always
     volumes:
-        - ${LABBOX_EPHYS_MONGO_DATA_DIR}:/data/db
+      - ${LABBOX_EPHYS_MONGO_DATA_DIR}:/data/db

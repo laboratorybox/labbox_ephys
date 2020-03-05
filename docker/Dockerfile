@@ -35,8 +35,8 @@ RUN git clone https://github.com/flatironinstitute/reactopya /src/reactopya \
 RUN pip install --upgrade setuptools
 
 #########################################
-### Install spikeinterface packages
-RUN pip install spiketoolkit==0.5.1 spikewidgets==0.3.2 spikecomparison==0.2.2
+### spikeinterface packages
+RUN pip install spikeextractors==0.7.2 spiketoolkit==0.5.2 spikesorters==0.2.5 spikewidgets==0.3.3
 
 #########################################
 ### Install spikeforest2

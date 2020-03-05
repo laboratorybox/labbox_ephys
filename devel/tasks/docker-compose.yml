@@ -1,0 +1,10 @@
+version: "3"
+services:
+    mongodb_dev:
+        image: mongo:latest
+        container_name: mongodb_dev
+        restart: always
+        ports:
+            - 27020:27017
+        volumes:
+            - ${LABBOX_EPHYS_MONGO_DATA_DIR}:/data/db

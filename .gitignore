@@ -1,8 +1,6 @@
 .ipynb_checkpoints
 *.egg-info
-config.user.sh
 local-data
 Untitled*.ipynb
 __pycache__
-dev.sh
-devapp.sh
+slurm-working-dir

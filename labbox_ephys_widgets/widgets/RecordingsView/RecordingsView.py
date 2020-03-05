@@ -1,4 +1,4 @@
-from .lbdb import find, remove
+from labbox_ephys import dbcollection
 
 class RecordingsView:
     def __init__(self):
@@ -14,11 +14,11 @@ class RecordingsView:
     def on_message(self, msg):
         if msg['action'] == 'remove_recordings':
             recording_ids = msg['recording_ids']
-            remove(collection='recordings', query={'recording_id': {'$in': recording_ids}})
+            dbcollection('recordings').remove(query={'recording_id': {'$in': recording_ids}})
         self._refresh_recordings()
     
     def _refresh_recordings(self):
-        recordings = find(collection='recordings', query=dict())
+        recordings = dbcollection('recordings').find(query=dict())
         self._set_state(recordings=recordings)
     
     # Send a custom message to JavaScript side

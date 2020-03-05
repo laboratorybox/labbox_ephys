@@ -4,7 +4,7 @@
 	"dockerFile": "Dockerfile",
 
 	// Set *default* container specific settings.json values on container create.
-	"settings": { 
+	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
 		"python.pythonPath": "/usr/bin/python",
 		"python.linting.enabled": true,
@@ -45,8 +45,13 @@
 		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
 		"source=${localEnv:HITHER2_SOURCE_DIR},target=/workspaces/hither2,type=bind,consistency=cached",
 		"source=${localEnv:KACHERY_SOURCE_DIR},target=/workspaces/kachery,type=bind,consistency=cached",
+		"source=${localEnv:SPIKEFOREST2_SOURCE_DIR},target=/workspaces/spikeforest2,type=bind,consistency=cached",
 		// // "source=${localEnv:MONGO_DATA_DIR},target=/data/db,type=bind,consistency=cached"
 		"source=/home/magland/labbox_ephys_mongo_data,target=/data/db,type=bind,consistency=cached"
+
+		// So that installed vscode extensions persist between builds
+		// See: https://code.visualstudio.com/docs/remote/containers-advanced#_avoiding-extension-reinstalls-on-container-rebuild
+		"source=labbox_ephys_vscode_server_extensions,target=/home/vscode/.vscode-server/extensions,type=volume"
 	],
 
 	"containerEnv": {
@@ -60,7 +65,9 @@
 		"LABBOX_EPHYS_SOURCE_DIR": "${localEnv:LABBOX_EPHYS_SOURCE_DIR}",
 		"SPIKEFOREST_COMPUTE_RESOURCE_READWRITE_PASSWORD": "${localEnv:SPIKEFOREST_COMPUTE_RESOURCE_READWRITE_PASSWORD}",
 		"DISPLAY": "${localEnv:DISPLAY}",
-		"HOME": "/home/vscode"
+		"HOME": "/home/vscode",
+		"MONGO_URI": "mongodb://localhost:27020"
+		
 	},
 
 	"runArgs": [
