@@ -15,18 +15,24 @@ export default class SortingsTable extends Component {
         const { sortings } = this.props;
         const { selectedSortingIds } = this.state
         let columns = [
-            {id: 'sorting', label: 'Sorting'},
+            {id: 'recording', label: 'Recording'},
+            {id: 'group', label: 'Group/Shank'},
+            {id: 'sorter_name', label: 'Sorter'},
             {id: 'nunits', label: 'Num. units'}
         ];
-        let rows = sortings.map((rec) => (
-            {
+        let rows = sortings.map((rec) => {
+            const href = `sortingview?sorting_id=${rec.sorting_id}`;
+            const target = '_blank'
+            return {
                 id: rec.sorting_id,
                 cells: {
-                    sorting: {content: rec.sorting_id, href: `sortingview?sorting_id=${rec.sorting_id}`, target: '_blank'},
-                    nunits: {content: rec.unit_ids.length}
+                    recording: {content: rec.recording_id, href: href, target: target},
+                    group: {content: rec.group_id, href: href, target: target},
+                    sorter_name: {content: rec.sorter_name, href: href, target: target},
+                    nunits: {content: rec.unit_ids.length, href: href, target: target}
                 }
             }
-        ));
+        });
         return (
             <div>
                 <Toolbar>

@@ -17,7 +17,7 @@ Browser-based visualization of ephys data
 * Docker-compose
 * Chrome web browser
 
-It is important that you are able to run docker as a regular user. To enable this, you must add your user to the docker group as follows:
+It is important that you are able to run docker as a regular (non-root) user. To enable this, you must add your user to the docker group as follows:
 
 ```
 sudo usermod -aG docker vscode
@@ -64,11 +64,8 @@ export LABBOX_EPHYS_DATA_DIR=/some/path/to/local-data
 # An existing directory where the system will store a persistent database
 export LABBOX_EPHYS_MONGO_DATA_DIR=/some/path/to/mongo-data
 
-# An existing directory where configuration files will be saved
-export LABBOX_EPHYS_HOME=/some/path/to/labbox-home
-
 # The path to the source directory (where you cloned labbox_ephys)
-export LABBOX_EPHYS_SOURCE_DIR=/path/to/the/source/directory/of/labbox_epys
+export LABBOX_EPHYS_SOURCE_DIR=/path/to/the/source/directory/of/labbox_ephys
 ```
 
 It is important that all of these directories already exist and have read/write privileges by the current user.
