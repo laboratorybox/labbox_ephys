@@ -6,7 +6,7 @@
 
 # Labbox-ephys
 
-Browser-based visualization of ephys data
+Browser-based visualization and processing of ephys data. We are at the prototyping stage.
 
 ## Installation
 
@@ -112,6 +112,10 @@ To import recordings from disk, first save your recordings in individual directo
 From within JupyterLab, open the `example_notebooks/example_local_import.ipynb` notebooks and run the notebook cells. This will automatically find and import all of the recordings found in the the $LOCAL_DATA_DIR directory.
 
 Once the recordings are imported, you can then go back to the main labbox_ephys page and click on the "View recordings" link. You should then be able to see the imported recordings.
+
+### Spike sorting
+
+There is also an example notebook for performing preliminary spike sorting. The results of the spike sorting get inserted into the database and may be visualized through the web interface.
 
 ## Flatiron probe file format (.json)
  
