@@ -17,6 +17,16 @@ Browser-based visualization of ephys data
 * Docker-compose
 * Chrome web browser
 
+**IMPORTANT:** Due to some limitations of docker-compose, it is temporarily required to modify the permissions of the docker socket file allowing all users access to docker:
+
+```
+sudo chmod 666 /var/run/docker.sock
+```
+
+WARNING: This essentially enables all users of the server to have root access to the machine. I am working on an alternative solution.
+
+For now, you will need to rerun that chmod command every time the server is restarted or whenever the docker daemon is restarted.
+
 ### Step 1. Clone this repository
 
 ```
