@@ -8,11 +8,11 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
       - "/tmp:/tmp"
       - "../example_notebooks:/data/example_notebooks:ro"
-      - "${KACHERY_STORAGE_DIR}:/kachery-storage"
+      - "${KACHERY_STORAGE_DIR}:${KACHERY_STORAGE_DIR}"
       - "${LABBOX_EPHYS_DATA_DIR}:/data/local-data"
       - "${LABBOX_EPHYS_HOME}:/home/labbox:cached"
     environment:
-      - KACHERY_STORAGE_DIR=/kachery-storage
+      - KACHERY_STORAGE_DIR=${KACHERY_STORAGE_DIR}
       - MONGO_URI=mongodb://mongodb:27017
       - COMPUTE_RESOURCE_ID=labbox-ephys
       - JUPYTERLAB_PORT=${LABBOX_EPHYS_JUPYTERLAB_PORT}
@@ -29,11 +29,11 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
       - "/tmp:/tmp"
       - "${LABBOX_EPHYS_SOURCE_DIR}/example_notebooks:/data/example_notebooks:ro"
-      - "${KACHERY_STORAGE_DIR}:/kachery-storage"
+      - "${KACHERY_STORAGE_DIR}:${KACHERY_STORAGE_DIR}"
       - "${LABBOX_EPHYS_DATA_DIR}:/data/local-data"
       - "${LABBOX_EPHYS_HOME}:/home/labbox:cached"
     environment:
-      - KACHERY_STORAGE_DIR=/kachery-storage
+      - KACHERY_STORAGE_DIR=${KACHERY_STORAGE_DIR}
       - JUPYTERLAB_TOKEN
       - MONGO_URI=mongodb://mongodb:27017
       - COMPUTE_RESOURCE_ID=labbox-ephys
@@ -47,12 +47,12 @@ services:
       - "/etc/group:/etc/group:ro"
       - "/etc/localtime:/etc/localtime:ro"
       - "/tmp:/tmp"
-      - "${KACHERY_STORAGE_DIR}:/kachery-storage"
+      - "${KACHERY_STORAGE_DIR}:${KACHERY_STORAGE_DIR}"
       - "${LABBOX_EPHYS_SOURCE_DIR}/docker/compute_resource:/compute_resource:cached"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${LABBOX_EPHYS_HOME}:/home/labbox:cached"
     environment:
-      - KACHERY_STORAGE_DIR=/kachery-storage
+      - KACHERY_STORAGE_DIR=${KACHERY_STORAGE_DIR}
       - MONGO_URI=mongodb://mongodb:27017
       - COMPUTE_RESOURCE_ID=labbox-ephys
       - HOME=/home/labbox
