@@ -55,6 +55,14 @@ class LabboxEphysRecordingExtractor(se.RecordingExtractor):
                         channel_ids=np.array(channel_ids)
                     )
                     self.arg = dict(group=group, recording=R.object())
+                elif ('recording' in arg) and ('channel_ids' in arg):
+                    R = LabboxEphysRecordingExtractor(arg['recording'], download=download)
+                    channel_ids = arg['channel_ids']
+                    self._recording = se.SubRecordingExtractor(
+                        parent_recording=R,
+                        channel_ids=np.array(channel_ids)
+                    )
+                    self.arg = dict(channel_ids=channel_ids, recording=R.object())
                 elif ('raw' in arg) and ('params' in arg) and ('geom' in arg):
                     self._recording = MdaRecordingExtractor(timeseries_path=_path(arg['raw']), samplerate=arg['params']['samplerate'], geom=np.array(arg['geom']), download=download)
                 else:
