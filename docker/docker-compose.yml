@@ -1,7 +1,7 @@
 version: "3"
 services:
   gui: # The main GUI app
-    image: labbox_ephys:latest
+    image: labbox_ephys_updateuid:latest
     ports:
       - "${LABBOX_EPHYS_PORT}:8080"
     volumes:
@@ -10,7 +10,6 @@ services:
       - "../example_notebooks:/data/example_notebooks:ro"
       - "${KACHERY_STORAGE_DIR}:${KACHERY_STORAGE_DIR}"
       - "${LABBOX_EPHYS_DATA_DIR}:/data/local-data"
-      - "${LABBOX_EPHYS_HOME}:/home/labbox:cached"
     environment:
       - KACHERY_STORAGE_DIR=${KACHERY_STORAGE_DIR}
       - MONGO_URI=mongodb://mongodb:27017
@@ -18,11 +17,11 @@ services:
       - JUPYTERLAB_PORT=${LABBOX_EPHYS_JUPYTERLAB_PORT}
       - KILL_CODE=${LABBOX_EPHYS_KILL_CODE}
       - HOME=/home/labbox
-    user: "${USER_ID}:${GROUP_ID}"
+    # user: "${USER_ID}:${GROUP_ID}"
     # We sleep to give the database a change to go up
     command: "bash -c \"sleep 4 && reactopya-server /app/app.json --port 8080\""
   jupyterlab: # Jupyter lab server
-    image: labbox_ephys:latest
+    image: labbox_ephys_updateuid:latest
     ports:
       - "${LABBOX_EPHYS_JUPYTERLAB_PORT}:8888"
     volumes:
@@ -31,21 +30,17 @@ services:
       - "${LABBOX_EPHYS_SOURCE_DIR}/example_notebooks:/data/example_notebooks:ro"
       - "${KACHERY_STORAGE_DIR}:${KACHERY_STORAGE_DIR}"
       - "${LABBOX_EPHYS_DATA_DIR}:/data/local-data"
-      - "${LABBOX_EPHYS_HOME}:/home/labbox:cached"
     environment:
       - KACHERY_STORAGE_DIR=${KACHERY_STORAGE_DIR}
       - JUPYTERLAB_TOKEN
       - MONGO_URI=mongodb://mongodb:27017
       - COMPUTE_RESOURCE_ID=labbox-ephys
       - HOME=/home/labbox
-    user: "${USER_ID}:${GROUP_ID}"
+    # user: "${USER_ID}:${GROUP_ID}"
     command: "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/data --NotebookApp.token=''"
   compute_resource: # Compute resource
-    image: labbox_ephys:latest
+    image: labbox_ephys_updateuid:latest
     volumes:
-      - "/etc/passwd:/etc/passwd:ro"
-      - "/etc/group:/etc/group:ro"
-      - "/etc/localtime:/etc/localtime:ro"
       - "/tmp:/tmp"
       - "${KACHERY_STORAGE_DIR}:${KACHERY_STORAGE_DIR}"
       - "${LABBOX_EPHYS_SOURCE_DIR}/docker/compute_resource:/compute_resource:cached"
@@ -56,11 +51,11 @@ services:
       - MONGO_URI=mongodb://mongodb:27017
       - COMPUTE_RESOURCE_ID=labbox-ephys
       - HOME=/home/labbox
-    user: "${USER_ID}:${GROUP_ID}"
+    # user: "${USER_ID}:${GROUP_ID}"
     working_dir: /compute_resource
     # We sleep to give the database a change to go up
     # command: "bash -c \"sleep 1 && sudo -u `id -un 1001` bash -c 'echo $KACHERY_STORAGE_DIR && ls $KACHERY_STORAGE_DIR && hither2-compute-resource start'\""
-    command: "bash -c \"sleep 2 && docker run hello-world && hither2-compute-resource start\""
+    command: "bash -c \"sudo usermod -aG docker labbox && newgrp docker && groups labbox && groups && cat /etc/group && ls -l /var/run/docker.sock && whoami && id -u && groups && sleep 2 && docker run hello-world && hither2-compute-resource start\""
     # command: "bash -c \"sleep 1 && docker run hello-world && hither2-compute-resource start\""
   mongodb:
     image: mongo:latest

@@ -17,15 +17,18 @@ Browser-based visualization of ephys data
 * Docker-compose
 * Chrome web browser
 
-**IMPORTANT:** Due to some limitations of docker-compose, it is temporarily required to modify the permissions of the docker socket file allowing all users access to docker:
+It is important that you are able to run docker as a regular user. To enable this, you must add your user to the docker group as follows:
 
 ```
-sudo chmod a+rw /var/run/docker.sock
+sudo usermod -aG docker vscode
+newgrp docker
 ```
 
-WARNING: This essentially enables all users of the server to have root access to the machine. I am working on an alternative solution.
+Now verify that you can run docker without sudo:
 
-For now, you will need to rerun that chmod command every time the server is restarted or whenever the docker daemon is restarted.
+```
+docker run hello-world
+```
 
 ### Step 1. Clone this repository
 
