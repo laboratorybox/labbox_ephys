@@ -5,7 +5,7 @@ import numpy as np
 import io
 import base64
 import time
-from labbox_ephys import AutoRecordingExtractor, writemda32
+import labbox_ephys as le
 import logging
 logger = logging.getLogger('reactopya')
 
@@ -27,7 +27,7 @@ class TimeseriesView:
                 self._set_error('Missing: recording')
                 return
             try:
-                self._recording = AutoRecordingExtractor(recording0)
+                self._recording = le.LabboxEphysRecordingExtractor(recording0)
             except Exception as err:
                 traceback.print_exc()
                 self._set_error('Problem initiating recording: {}'.format(err))
@@ -125,7 +125,7 @@ class TimeseriesView:
 
 def _mda32_to_base64(X):
     f = io.BytesIO()
-    writemda32(X, f)
+    le.writemda32(X, f)
     return base64.b64encode(f.getvalue()).decode('utf-8')
 
 def _extract_data_segment(*, recording, segment_num, segment_size):
@@ -149,8 +149,8 @@ def _create_multiscale_recordings(*, recording, progressive_ds_factor, create_ef
     while current_ds_factor * progressive_ds_factor < N:
         current_rx = _DownsampledRecordingExtractor(
             recording=current_rx, ds_factor=progressive_ds_factor, input_has_minmax=recording_has_minmax)
-        if create_efficient_access:
-            current_rx = EfficientAccessRecordingExtractor(recording=current_rx)
+        # if create_efficient_access:
+        #     current_rx = EfficientAccessRecordingExtractor(recording=current_rx)
         current_ds_factor = current_ds_factor * progressive_ds_factor
         ret[current_ds_factor] = current_rx
         recording_has_minmax = True
@@ -236,10 +236,10 @@ class _DownsampledRecordingExtractor(se.RecordingExtractor):
             ret[:, 1::2] = np.max(X_reshaped, axis=2)
             return ret
 
-    @staticmethod
-    def write_recording(recording, save_path):
-        EfficientAccessRecordingExtractor(
-            recording=recording, _dest_path=save_path)
+    # @staticmethod
+    # def write_recording(recording, save_path):
+    #     EfficientAccessRecordingExtractor(
+    #         recording=recording, _dest_path=save_path)
 
 def _samplehash(recording):
     # from mountaintools import client as mt

@@ -1,11 +1,9 @@
-import spiketoolkit as st
-import matplotlib.pyplot as plt
 import numpy as np
-from scipy import special
 from ._correlograms_phy import compute_correlograms
 
 
 def _create_filter_kernel(N, samplerate, freq_min, freq_max, freq_wid=1000):
+    from scipy import special
     # Matches ahb's code /matlab/processors/ms_bandpass_filter.m
     # improved ahb, changing tanh to erf, correct -3dB pts  6/14/16
     T = N / samplerate  # total time
@@ -60,6 +58,7 @@ def _bandpass_filter(traces, samplerate, freq_min, freq_max, freq_wid=1000):
 
 
 def extract_unit_clips(*, recording, sorting, unit_ids, ms_before, ms_after, max_spikes_per_unit, filtopts=None):
+    import spiketoolkit as st
     ms_padding = 0
     if filtopts is not None:
         freq_min = filtopts['freq_min']
@@ -103,13 +102,13 @@ def compute_unit_templates(*, recording, sorting, unit_ids, ms_before, ms_after,
 
 
 def plot_spike_waveform(X, spacing='auto', amp_scale_factor=1):
+    import matplotlib.pyplot as plt
     if spacing == 'auto':
         spacing = np.max(np.abs(X)) / amp_scale_factor
     M = X.shape[0]
     T = X.shape[1]
     for m in range(M):
         plt.plot(np.arange(T), X[m, :].T + spacing * m)
-    import matplotlib
     plt.ylim([-spacing*2, (M+1)*spacing])
     ax = plt.gca()
     ax.set_xticks([])
@@ -127,6 +126,7 @@ def _plot_correlogram(*, ax, bin_counts, bins, wid, title='', color=None):
 
 
 def plot_autocorrelogram(sorting, unit_id, window_size_msec, bin_size_msec):
+    import matplotlib.pyplot as plt
     times = sorting.get_unit_spike_train(unit_id=unit_id)
     labels = np.ones(times.shape, dtype=np.int32)
     window_size = window_size_msec / 1000
@@ -146,6 +146,7 @@ def plot_autocorrelogram(sorting, unit_id, window_size_msec, bin_size_msec):
 
 
 def plot_crosscorrelogram(sorting, unit_id1, unit_id2, window_size_msec, bin_size_msec):
+    import matplotlib.pyplot as plt
     times1 = sorting.get_unit_spike_train(unit_id=unit_id1)
     times2 = sorting.get_unit_spike_train(unit_id=unit_id2)
     times = np.concatenate((times1, times2))

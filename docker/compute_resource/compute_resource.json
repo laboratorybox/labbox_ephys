@@ -1,0 +1,19 @@
+{
+    "compute_resource_id": "labbox-ephys",
+    "database": {
+        "mongo_url": "mongodb://mongodb:27017",
+        "database": "labbox"
+    },
+    "kachery": null,
+    "job_handler": {
+        "type": "slurm",
+        "config": {
+            "use_slurm": false,
+            "num_workers_per_batch": 4.0,
+            "num_cores_per_job": 2,
+            "time_limit_per_batch": 7200,
+            "max_simultaneous_batches": 1,
+            "additional_srun_opts": []
+        }
+    }
+}

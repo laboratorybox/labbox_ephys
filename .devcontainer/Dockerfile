@@ -71,6 +71,7 @@ RUN mkdir -p /home/$USERNAME/.vscode-server/extensions && chown -R $USERNAME /ho
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
 
+# docker
 RUN apt-get update && \
     apt-get -y install apt-transport-https \
         ca-certificates \
@@ -104,8 +105,16 @@ RUN apt-get install -y gedit
 # docker-compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
 
+
+
 # spikeinterface packages
 RUN pip install spikeextractors==0.7.2 spiketoolkit==0.5.2 spikesorters==0.2.5 spikewidgets==0.3.3
+
+# nano
+RUN apt-get install -y nano
+
+# pytest, etc
+RUN pip install pylint ipython pytest pytest-cov
 
 # RUn apt-get install -y libgtk3.0-cil-dev libgtk2.0.0 libnss3-dev libx11-xcb1
 # RUN apt-get install -y libasound2

@@ -5,10 +5,6 @@
             "pyFile": "main.py"
         },
         {
-            "name": "directoryview",
-            "pyFile": "directoryview.py"
-        },
-        {
             "name": "timeseriesview",
             "pyFile": "timeseriesview.py"
         },

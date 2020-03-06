@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 export JUPYTERLAB_TOKEN=secret-token
 export LABBOX_EPHYS_KILL_CODE=killcode
@@ -43,14 +43,21 @@ fi
 export USER_ID=`id -u`
 export GROUP_ID=`id -g`
 
-cd ..
-docker build -t labbox_ephys:latest -f docker/Dockerfile .
-cd docker
+# cd ..
+# docker build -t labbox_ephys:latest -f docker/Dockerfile .
+# cd docker
 
-docker pull mongo:latest
-docker-compose rm -sf mongodb || true
-docker-compose rm -sf jupyterlab || true
-docker-compose rm -sf gui || true
+# docker stop labbox_ephys_compute_resource || true
+# docker rm labbox_ephys_compute_resource || true
+
+# docker pull mongo:latest
+# docker-compose rm -sf mongodb || true
+# docker-compose rm -sf jupyterlab || true
+# docker-compose rm -sf gui || true
+# docker-compose rm -sf compute_resource || true
 docker-compose up --build --abort-on-container-exit "$@"
+
+docker stop labbox_ephys_compute_resource || true
+docker rm labbox_ephys_compute_resource || true
 
 # docker-compose up --abort-on-container-exit jupyterlab

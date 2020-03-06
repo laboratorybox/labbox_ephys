@@ -24,11 +24,29 @@
             "command": "cd devel/tasks && sleep 1 && bash -ic ./run_compute_resource.sh"
         },
         {
-            // Start all the dev services
-            "label": "all-dev",
+            // Watch for changes in .py files of labbox_ephys_widgets
+            "label": "watch-gui",
             "type": "shell",
-            "command": "echo all-dev",
-            "dependsOn":["mongodb-dev", "compute-resource-dev", "jupyterlab-dev"]
+            "command": "cd devel/tasks && bash -ic ./watch_gui.sh"
+        },
+        {
+            // Start the GUI
+            "label": "build-gui-dev",
+            "type": "shell",
+            "command": "cd devel/tasks && bash -ic ./build_gui.sh"
+        },
+        {
+            // Start the GUI
+            "label": "gui-dev",
+            "type": "shell",
+            "command": "cd devel/tasks && bash -ic ./run_gui.sh"
+        },
+        {
+            // Start all the dev services
+            "label": "all-services",
+            "type": "shell",
+            "command": "echo all-services",
+            "dependsOn":["watch-gui", "mongodb-dev", "compute-resource-dev", "gui-dev", "jupyterlab-dev"]
         }
     ]
 }

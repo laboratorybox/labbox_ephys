@@ -14,11 +14,11 @@ class RecordingsView:
     def on_message(self, msg):
         if msg['action'] == 'remove_recordings':
             recording_ids = msg['recording_ids']
-            dbcollection('recordings').remove(query={'recording_id': {'$in': recording_ids}})
+            dbcollection('recordings').remove({'recording_id': {'$in': recording_ids}})
         self._refresh_recordings()
     
     def _refresh_recordings(self):
-        recordings = dbcollection('recordings').find(query=dict())
+        recordings = list(dbcollection('recordings').find(dict()))
         self._set_state(recordings=recordings)
     
     # Send a custom message to JavaScript side

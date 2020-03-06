@@ -62,4 +62,27 @@ COPY setup.py /src/labbox_ephys/setup.py
 WORKDIR /src/labbox_ephys
 RUN pip install .
 
+### Install hither2
+RUN git clone https://github.com/laboratorybox/hither2 /src/hither2 \
+    && cd /src/hither2 \
+    && git checkout ce5090f27936093f2a68136759adb5070e2b8a9d \
+    && pip install -e .
+
+### Install docker
+RUN apt-get update && \
+    apt-get -y install apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg2 \
+        software-properties-common && \
+    curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey && \
+    add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+    $(lsb_release -cs) \
+    stable" && \
+    apt-get update && \
+    apt-get -y install docker-ce
+
+RUN apt-get install -y sudo
+
 COPY labbox_ephys_widgets/app /app

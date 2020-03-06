@@ -1,4 +1,4 @@
-from labbox_ephys import AutoRecordingExtractor
+import labbox_ephys as le
 from .lbdb import find
 
 
@@ -12,22 +12,18 @@ class RecordingView:
         recording = state.get('recording', None)
         if not recording:
             recording_id = state['recording_id']
-            docs = find(collection='recordings', query=dict(recording_id=recording_id))
-            if len(docs) == 0:
-                self._set_error(f'Unable to find recording with id: {recording_id}')
-                return
-            recording = docs[0]
+            recording = le.load_recording_doc(recording_id=recording_id)
             self._set_state(recording=recording)
 
         if recording:
-            R = AutoRecordingExtractor(recording['recording_path'])
+            R = le.LabboxEphysRecordingExtractor(recording['recording'])
             self._set_state(
                 channel_ids=R.get_channel_ids(),
                 channel_groups=R.get_channel_groups(),
                 channel_locations=R.get_channel_locations()
             )
 
-        self._set_status('finished', 'Finished SortingView')
+        self._set_status('finished', 'Finished RecordingView')
 
     def on_message(self, msg):
         # process custom messages from JavaScript here

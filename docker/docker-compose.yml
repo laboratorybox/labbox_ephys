@@ -14,11 +14,13 @@ services:
     environment:
       - KACHERY_STORAGE_DIR=/kachery-storage
       - MONGO_URI=mongodb://mongodb:27017
+      - COMPUTE_RESOURCE_ID=labbox-ephys
       - JUPYTERLAB_PORT=${LABBOX_EPHYS_JUPYTERLAB_PORT}
       - KILL_CODE=${LABBOX_EPHYS_KILL_CODE}
       - HOME=/home/labbox
     user: "${USER_ID}:${GROUP_ID}"
-    command: "reactopya-server /app/app.json --port 8080"  
+    # We sleep to give the database a change to go up
+    command: "bash -c \"sleep 4 && reactopya-server /app/app.json --port 8080\""
   jupyterlab: # Jupyter lab server
     image: labbox_ephys:latest
     ports:
@@ -34,10 +36,32 @@ services:
       - KACHERY_STORAGE_DIR=/kachery-storage
       - JUPYTERLAB_TOKEN
       - MONGO_URI=mongodb://mongodb:27017
+      - COMPUTE_RESOURCE_ID=labbox-ephys
       - HOME=/home/labbox
     user: "${USER_ID}:${GROUP_ID}"
     command: "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/data --NotebookApp.token=''"
-    # command: "ls -l /home"
+  compute_resource: # Compute resource
+    image: labbox_ephys:latest
+    volumes:
+      - "/etc/passwd:/etc/passwd:ro"
+      - "/etc/group:/etc/group:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/tmp:/tmp"
+      - "${KACHERY_STORAGE_DIR}:/kachery-storage"
+      - "${LABBOX_EPHYS_SOURCE_DIR}/docker/compute_resource:/compute_resource:cached"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${LABBOX_EPHYS_HOME}:/home/labbox:cached"
+    environment:
+      - KACHERY_STORAGE_DIR=/kachery-storage
+      - MONGO_URI=mongodb://mongodb:27017
+      - COMPUTE_RESOURCE_ID=labbox-ephys
+      - HOME=/home/labbox
+    user: "${USER_ID}:${GROUP_ID}"
+    working_dir: /compute_resource
+    # We sleep to give the database a change to go up
+    # command: "bash -c \"sleep 1 && sudo -u `id -un 1001` bash -c 'echo $KACHERY_STORAGE_DIR && ls $KACHERY_STORAGE_DIR && hither2-compute-resource start'\""
+    command: "bash -c \"sleep 5 && id -u && whoami && groups && docker run hello-world && hither2-compute-resource start\""
+    # command: "bash -c \"sleep 1 && docker run hello-world && hither2-compute-resource start\""
   mongodb:
     image: mongo:latest
     container_name: mongodb

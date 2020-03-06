@@ -1,37 +1,52 @@
 import os
 import json
 import kachery as ka
+import hither2 as hi
 import spikeextractors as se
 import numpy as np
 from .mdaextractors import MdaSortingExtractor
 
-class AutoSortingExtractor(se.SortingExtractor):
+def _path(x):
+    if type(x) is str:
+        return x
+    elif isinstance(x, hi.File):
+        return x.path
+    else:
+        raise Exception('Cannot get path from:', x)
+
+class LabboxEphysSortingExtractor(se.SortingExtractor):
     def __init__(self, arg, samplerate=None):
         super().__init__()
-        self._hash = None
-        if isinstance(arg, se.SortingExtractor):
+
+        self.arg = arg
+
+        if isinstance(arg, LabboxEphysSortingExtractor):
             self._sorting = arg
-            self.copy_unit_properties(sorting=self._sorting)
+            self.arg = self._sorting.arg
         else:
-            self._sorting = None
-            if type(arg) == str:
-                arg = dict(path=arg, samplerate=samplerate)
-            if type(arg) == dict:
-                if 'kachery_config' in arg:
-                    ka.set_config(**arg['kachery_config'])
-                if 'path' in arg:
-                    path = arg['path']
-                    if ka.get_file_info(path):
-                        file_path = ka.load_file(path)
-                        if not file_path:
-                            raise Exception('Unable to realize file: {}'.format(path))
-                        self._init_from_file(file_path, original_path=path, kwargs=arg)
-                    else:
-                        raise Exception('Not a file: {}'.format(path))
+            if type(arg) == str or isinstance(arg, hi.File):
+                path = _path(arg)
+                if path.endswith('.json'):
+                    arg = ka.load_object(path)
+            
+            if type(arg) == str or isinstance(arg, hi.File):
+                path = _path(arg)
+                self._sorting = MdaSortingExtractor(firings_file=path, samplerate=samplerate)
+            elif type(arg) == dict:
+                if 'firings' in arg:
+                    self._sorting = LabboxEphysSortingExtractor(arg['firings'], samplerate=samplerate)
+                elif 'path' in arg:
+                    self._sorting = LabboxEphysSortingExtractor(arg['path'], samplerate=samplerate)
                 else:
-                    raise Exception('Unable to initialize sorting extractor')
+                    raise Exception('Invalid arg for LabboxEphysSortingExtractor', arg)
             else:
-                raise Exception('Unable to initialize sorting extractor (unexpected type)')
+                raise Exception('Invalid arg for LabboxEphysSortingExtractor', arg)
+
+        self.copy_unit_properties(sorting=self._sorting)
+    
+    def object(self):
+        return _resolve_paths_in_item(self.arg)
+
     def _init_from_file(self, path: str, *, original_path: str, kwargs: dict):
         if MdaSortingExtractor.can_read(firings_file=path):
             if 'paramsPath' in kwargs:
@@ -215,6 +230,20 @@ def _listify_ndarray(x):
         return ret
     else:
         raise Exception('Cannot listify ndarray with {} dims.'.format(x.ndim))
+
+def _resolve_paths_in_item(x):
+    if isinstance(x, hi.File):
+        return x.path
+    elif type(x) == list:
+        return [_resolve_paths_in_item[v] for v in x]
+    elif type(x) == tuple:
+        return tuple([_resolve_paths_in_item[v] for v in x])
+    elif type(x) == dict:
+        ret = dict()
+        for k, v in x.items():
+            ret[k] = _resolve_paths_in_item(v)
+    else:
+        return x
 
 # def _samplehash(sorting):
 #     from mountaintools import client as mt

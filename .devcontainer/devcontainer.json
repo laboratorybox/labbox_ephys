@@ -66,8 +66,8 @@
 		"SPIKEFOREST_COMPUTE_RESOURCE_READWRITE_PASSWORD": "${localEnv:SPIKEFOREST_COMPUTE_RESOURCE_READWRITE_PASSWORD}",
 		"DISPLAY": "${localEnv:DISPLAY}",
 		"HOME": "/home/vscode",
-		"MONGO_URI": "mongodb://localhost:27020"
-		
+		"MONGO_URI": "mongodb://localhost:27020",
+		"COMPUTE_RESOURCE_ID": "labbox-ephys-dev"
 	},
 
 	"runArgs": [

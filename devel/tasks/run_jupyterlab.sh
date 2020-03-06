@@ -2,5 +2,5 @@
 
 set -e
 
-cd ..
+cd ../..
 jupyter lab

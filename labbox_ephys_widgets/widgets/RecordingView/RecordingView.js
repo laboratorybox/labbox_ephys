@@ -76,7 +76,7 @@ export default class RecordingView extends Component {
                 </Box>
                 {
                     (selectedGroupId !== null) ? (
-                        <a href={`timeseriesview?path=${recording.recording_path}&group=${selectedGroupId}`}>
+                        <a href={`timeseriesview?recording_id=${recording.recording_id}&group=${selectedGroupId}`}>
                             View timeseries for shank {selectedGroupId}
                         </a>                        
                     ) : <span />

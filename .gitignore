@@ -1,6 +1,9 @@
+cov.xml
 .ipynb_checkpoints
 *.egg-info
 local-data
 Untitled*.ipynb
 __pycache__
 slurm-working-dir
+_watching
+.coverage

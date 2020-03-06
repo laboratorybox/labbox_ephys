@@ -1,7 +1,7 @@
 import random
 import spikewidgets as sw
 import spiketoolkit as st
-from labbox_ephys import AutoRecordingExtractor, AutoSortingExtractor
+import labbox_ephys as le
 from labbox_ephys.utils import compute_unit_templates, plot_spike_waveform
 import matplotlib as mpl
 mpl.use('Agg') # This is important for speed!
@@ -22,8 +22,8 @@ class SortingUnitTemplateWidget:
         unit_id = state['unit_id']
         figsize = state['figsize']
 
-        R = AutoRecordingExtractor(sorting['recording_path'])
-        S = AutoSortingExtractor(sorting['sorting_path'])
+        R = le.LabboxEphysRecordingExtractor(sorting['recording'])
+        S = le.LabboxEphysSortingExtractor(sorting['sorting'])
 
         filtopts = dict(
             freq_min=300,

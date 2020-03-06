@@ -7,3 +7,9 @@ def database():
 def dbcollection(collection):
     db = database()
     return db.collection(collection)
+
+def remote_job_handler():
+    return hi.RemoteJobHandler(
+        database=database(),
+        compute_resource_id=os.environ['COMPUTE_RESOURCE_ID']
+    )
