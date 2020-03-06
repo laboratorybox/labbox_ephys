@@ -320,7 +320,6 @@ class ElectrodeGeometryWidgetInner extends Component {
     handleMousePress = (X) => {
         if (!X) return;
         let elec_id = this.electrodeIdAtPixel(X.pos);
-        console.log('--- handleMousePress', X, elec_id);
         if ((X.modifiers.ctrlKey) || (X.modifiers.shiftKey)) {
             if (elec_id in (this.props.selectedElectrodeIds || {})) {
                 this.deselectElectrodeId(elec_id);

@@ -54,6 +54,7 @@ class LabboxEphysRecordingExtractor(se.RecordingExtractor):
                         parent_recording=R,
                         channel_ids=np.array(channel_ids)
                     )
+                    self.arg = dict(group=group, recording=R.object())
                 elif ('raw' in arg) and ('params' in arg) and ('geom' in arg):
                     self._recording = MdaRecordingExtractor(timeseries_path=_path(arg['raw']), samplerate=arg['params']['samplerate'], geom=np.array(arg['geom']), download=download)
                 else:
@@ -124,13 +125,14 @@ def _resolve_paths_in_item(x):
     if isinstance(x, hi.File):
         return x.path
     elif type(x) == list:
-        return [_resolve_paths_in_item[v] for v in x]
+        return [_resolve_paths_in_item(v) for v in x]
     elif type(x) == tuple:
-        return tuple([_resolve_paths_in_item[v] for v in x])
+        return tuple([_resolve_paths_in_item(v) for v in x])
     elif type(x) == dict:
         ret = dict()
         for k, v in x.items():
             ret[k] = _resolve_paths_in_item(v)
+        return ret
     else:
         return x
 
