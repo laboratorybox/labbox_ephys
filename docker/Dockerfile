@@ -65,7 +65,7 @@ RUN pip install .
 ### Install hither2
 RUN git clone https://github.com/laboratorybox/hither2 /src/hither2 \
     && cd /src/hither2 \
-    && git checkout ce5090f27936093f2a68136759adb5070e2b8a9d \
+    && git checkout bdcf2161a523c3098bb18dd6997741dc0151ca93 \
     && pip install -e .
 
 ### Install docker
