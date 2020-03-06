@@ -6,7 +6,7 @@
 
 # Labbox-ephys
 
-Browser-based visualization of ephys data
+Browser-based visualization and processing of ephys data
 
 ## Installation
 
