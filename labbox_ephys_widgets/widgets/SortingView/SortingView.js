@@ -3,6 +3,7 @@ import { PythonInterface } from 'reactopya';
 import { Table, TableHead, TableBody, TableRow, TableCell, Link, Checkbox, Box } from '@material-ui/core';
 import LBTable from './LBTable';
 import SortingUnitView from '../SortingUnitView/SortingUnitView';
+import SortingUnitsView from '../SortingUnitsView/SortingUnitsView';
 import SortingUnitBox from '../SortingUnitBox/SortingUnitBox';
 const config = require('./SortingView.json');
 
@@ -14,7 +15,7 @@ export default class SortingView extends Component {
         this.state = {
             // javascript state
             sortingId: '',
-            selectedUnitId: null,
+            selectedUnitIds: {},
 
             // python state
             sorting: null,
@@ -44,11 +45,22 @@ export default class SortingView extends Component {
     componentWillUnmount() {
         this.pythonInterface.stop();
     }
-    _handleUnitClicked = (uid) => {
-        this.setState({selectedUnitId: uid});
+    _handleUnitClicked = (uid, evt) => {
+        let suids = this.state.selectedUnitIds;
+        if ((evt.ctrlKey) || (evt.shiftKey)) {
+            if (uid in suids)
+                delete suids[uid];
+            else
+                suids[uid] = true;
+        }
+        else {
+            suids = {};
+            suids[uid] = true;
+        }
+        this.setState({selectedUnitIds: suids});
     }
     render() {
-        const { sorting, selectedUnitId } = this.state;
+        const { sorting, selectedUnitIds } = this.state;
 
         if (!sorting) {
             return (
@@ -57,6 +69,33 @@ export default class SortingView extends Component {
         }
 
         const unit_ids = sorting.unit_ids;
+
+        let selectedUnitIdsList = Object.keys(selectedUnitIds).sort();
+
+        let content = null;
+        if (selectedUnitIdsList.length === 0) {
+            content = <span />;
+        }
+        else if (selectedUnitIdsList.length === 1) {
+            content = (
+                <SortingUnitView
+                    sorting={sorting}
+                    unitId={selectedUnitIdsList[0]}
+                    reactopyaParent={this}
+                    reactopyaChildId={`SortingUnitView`}
+                />
+            );
+        }
+        else {
+            content = (
+                <SortingUnitsView
+                    sorting={sorting}
+                    unitIds={selectedUnitIdsList}
+                    reactopyaParent={this}
+                    reactopyaChildId={`SortingUnitsView`}
+                />
+            );
+        }
 
         return (
             <div>
@@ -71,30 +110,23 @@ export default class SortingView extends Component {
                 <Box display="flex" flexDirection="row" p={1} m={1} style={{overflowX: 'auto'}}>
                     {
                         unit_ids.map((uid) => (
-                            <Box p={1}>
+                            <Box p={1} key={`box-${uid}`}>
                                 <SortingUnitBox
                                     sorting={sorting}
                                     unitId={uid}
                                     reactopyaParent={this}
                                     reactopyaChildId={`SortingUnitView-${uid}`}
-                                    onClick={() => {this._handleUnitClicked(uid)}}
+                                    onClick={(evt) => {this._handleUnitClicked(uid, evt)}}
                                     width={150}
                                     height={300}
-                                    selected={(uid == selectedUnitId)}
+                                    selected={(uid in selectedUnitIds)}
                                 />
                             </Box>
                         ))
                     }
                 </Box>
                 {
-                    selectedUnitId !== null ? (
-                        <SortingUnitView
-                            sorting={sorting}
-                            unitId={selectedUnitId}
-                            reactopyaParent={this}
-                            reactopyaChildId={`SortingUnitView`}
-                        />
-                    ) : <span />
+                    content
                 }
             </div>
         )

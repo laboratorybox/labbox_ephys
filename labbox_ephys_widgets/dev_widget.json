@@ -7,13 +7,13 @@
         "type": "RecordingsView",
         "props": {}
     },
-    "widget_sv": {
+    "widget": {
         "type": "SortingView",
         "props": {
             "sorting": {
                 "recording_id": "sf:synth_magland_noise10_K10_C4/001_synth",
-                "recording_path": "sha1://ee5214337b2e01910a92c3613a4b8ad4be4dc476/SYNTH_MAGLAND/synth_magland_noise10_K10_C4/001_synth.json",
-                "sorting_path": "sha1://ff64f1713227c017052bf21b41ddf764320aa606/SYNTH_MAGLAND/synth_magland_noise10_K10_C4/001_synth.firings_true.json",
+                "recording": "sha1://ee5214337b2e01910a92c3613a4b8ad4be4dc476/SYNTH_MAGLAND/synth_magland_noise10_K10_C4/001_synth.json",
+                "sorting": "sha1://ff64f1713227c017052bf21b41ddf764320aa606/SYNTH_MAGLAND/synth_magland_noise10_K10_C4/001_synth.firings_true.json",
                 "sorting_name": "truth",
                 "sorting_id": "sf:synth_magland_noise10_K10_C4/001_synth::truth",
                 "unit_ids": [
@@ -74,6 +74,22 @@
             "unitId": 1
         }
     },
+    "widget_sus": {
+        "type": "SortingUnitsView",
+        "props": {
+            "sorting": {
+                "recording_id": "sf:paired_boyden32c/1103_1_1",
+                "recording_path": "sha1://0c89b66696ff92e529d97a31fe41af7949111a9a/PAIRED_BOYDEN/paired_boyden32c/1103_1_1.json",
+                "sorting_path": "sha1://fe3f7c918200ffe44db7759911e80978540d5201/PAIRED_BOYDEN/paired_boyden32c/1103_1_1.firings_true.json",
+                "sorting_name": "truth",
+                "sorting_id": "sf:paired_boyden32c/1103_1_1::truth",
+                "unit_ids": [
+                    1
+                ]
+            },
+            "unitId": 1
+        }
+    },
     "widget_sut": {
         "type": "SortingUnitTemplateWidget",
         "props": {
@@ -112,7 +128,7 @@
         "type": "SortingsView",
         "props": {}
     },
-    "widget": {
+    "widget_main": {
         "type": "MainWidget",
         "props": {}
     }

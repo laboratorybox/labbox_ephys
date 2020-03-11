@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
 const config = require('./TestMpld3Widget.json');
 const d3 = require('./d3.min.js');
-console.log('d3=', d3);
 window.mpld3 = require('./mpld3.v0.3.js');
 
 export default class TestMpld3Widget extends Component {

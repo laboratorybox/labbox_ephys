@@ -53,7 +53,7 @@ export default class SortingUnitBox extends Component {
 
         return (
             <div
-                className={this.props.selected ? "SortingUnitView selected" : "SortingUnitView"}
+                className={this.props.selected ? "SortingUnitBox selected" : "SortingUnitBox"}
                 onClick={this.props.onClick || function() {}}
             >
                 <h3 style={{textAlign: "center"}}>Unit {unitId}</h3>

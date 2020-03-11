@@ -3,7 +3,6 @@ import { PythonInterface } from 'reactopya';
 import './mpld3_custom.css';
 const config = require('./SortingUnitCorrelogramWidget.json');
 const d3 = require('./d3.min.js');
-console.log('d3=', d3);
 window.mpld3 = require('./mpld3.v0.3.js');
 
 export default class SortingUnitCorrelogramWidget extends Component {
@@ -14,7 +13,8 @@ export default class SortingUnitCorrelogramWidget extends Component {
         this.state = {
             // javascript state
             sorting: null,
-            unit_id: null,
+            unit_id1: null,
+            unit_id2: null,
             
             // python state
             status: '',
@@ -33,7 +33,13 @@ export default class SortingUnitCorrelogramWidget extends Component {
         this.update();
     }
     componentDidUpdate(prevProps, prevState) {
-        if ((prevProps.sorting !== this.props.sorting) || (prevProps.unitId !== this.props.unitId)) {
+        if (
+            (prevProps.sorting !== this.props.sorting) || 
+            (prevProps.unitId1 !== this.props.unitId1) || 
+            (prevProps.unitId2 !== this.props.unitId2) ||
+            (prevProps.width !== this.props.width) ||
+            (prevProps.height !== this.props.height)
+        ) {
             this.update();
         }
         const plot = this.state.plot;
@@ -50,7 +56,8 @@ export default class SortingUnitCorrelogramWidget extends Component {
         this.pythonInterface.setState({
             figsize: [this.props.width, this.props.height],
             sorting: this.props.sorting,
-            unit_id: this.props.unitId
+            unit_id1: this.props.unitId1,
+            unit_id2: this.props.unitId2
         });
         this.setState({plot: null});
     }

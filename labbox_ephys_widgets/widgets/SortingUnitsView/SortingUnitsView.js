@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
 import SortingUnitTemplateWidget from '../SortingUnitTemplateWidget/SortingUnitTemplateWidget';
 import SortingUnitCorrelogramWidget from '../SortingUnitCorrelogramWidget/SortingUnitCorrelogramWidget';
-import "./SortingUnitView.css";
-import { Box } from '@material-ui/core';
-const config = require('./SortingUnitView.json');
+import "./SortingUnitsView.css";
+import { Box, Table, TableBody, TableRow, TableCell } from '@material-ui/core';
+const config = require('./SortingUnitsView.json');
 
-export default class SortingUnitView extends Component {
+export default class SortingUnitsView extends Component {
     static title = 'View a unit in a sorting result'
     static reactopyaConfig = config
     constructor(props) {
@@ -45,7 +45,7 @@ export default class SortingUnitView extends Component {
     }
     render() {
         const { sorting } = this.state;
-        const { unitId } = this.props;
+        const { unitIds } = this.props;
 
         if (!sorting) {
             return (
@@ -53,31 +53,46 @@ export default class SortingUnitView extends Component {
             );
         }
 
+        if (unitIds.length === 0) {
+            return <span />;
+        }
+        const numUnits = unitIds.length;
+        const widthPerUnit = 1000 / numUnits;
+
         return (
             <div
-                className={this.props.selected ? "SortingUnitView selected" : "SortingUnitView"}
+                className={this.props.selected ? "SortingUnitsView selected" : "SortingUnitsView"}
                 onClick={this.props.onClick || function() {}}
             >
-                <h3 style={{textAlign: "center"}}>Unit {unitId}</h3>
-                <Box display="flex" flexDirection="row" p={2} m={2}>
-                    <SortingUnitTemplateWidget
-                        sorting={sorting}
-                        unitId={unitId}
-                        reactopyaParent={this}
-                        reactopyaChildId="SortingUnitTemplateWidget"
-                        width={300}
-                        height={300}
-                    />
-                    <SortingUnitCorrelogramWidget
-                        sorting={sorting}
-                        unitId1={unitId}
-                        unitId2={unitId}
-                        reactopyaParent={this}
-                        reactopyaChildId="SortingUnitCorrelogramWidget"
-                        width={300}
-                        height={300}
-                    />
-                </Box>
+                <h3 style={{textAlign: "center"}}>Units {unitIds.join(', ')}</h3>
+                <Table>
+                    <TableBody>
+                        {
+                            unitIds.map((uid1) => (
+                                <TableRow key={`row-${uid1}`}>
+                                    {
+                                        unitIds.map((uid2) => (
+                                            <TableCell key={`col=${uid2}`}>
+                                                <SortingUnitCorrelogramWidget
+                                                    sorting={sorting}
+                                                    unitId1={uid1}
+                                                    unitId2={uid2}
+                                                    reactopyaParent={this}
+                                                    reactopyaChildId={`SortingUnitCorrelogramWidget-${uid1}-${uid2}`}
+                                                    width={widthPerUnit}
+                                                    height={widthPerUnit}
+                                                />
+                                            </TableCell>
+                                        ))
+                                    }
+                                </TableRow>
+                            ))
+                        }
+                    </TableBody>
+                </Table>
+                {/* <Box display="flex" flexDirection="row" p={2} m={2}>
+                    
+                </Box> */}
             </div>
         )
     }

@@ -2,7 +2,7 @@ import random
 import spikewidgets as sw
 import spiketoolkit as st
 import labbox_ephys as le
-from labbox_ephys.utils import plot_autocorrelogram
+from labbox_ephys.utils import plot_autocorrelogram, plot_crosscorrelogram
 import matplotlib as mpl
 mpl.use('Agg') # This is important for speed!
 import matplotlib.pyplot as plt
@@ -19,7 +19,8 @@ class SortingUnitCorrelogramWidget:
         self._set_status('running', 'Running SortingUnitCorrelogramWidget')
 
         sorting = state['sorting']
-        unit_id = state['unit_id']
+        unit_id1 = int(state['unit_id1'])
+        unit_id2 = int(state['unit_id2'])
         figsize = state['figsize']
 
         R = le.LabboxEphysRecordingExtractor(sorting['recording'])
@@ -27,7 +28,10 @@ class SortingUnitCorrelogramWidget:
         S.set_sampling_frequency(R.get_sampling_frequency()) # in case it doesn't have it
 
         f = plt.figure(figsize=[figsize[0]/100, figsize[1]/100], dpi=100)
-        plot_autocorrelogram(sorting=S, unit_id=unit_id, window_size_msec=300, bin_size_msec=1)
+        if unit_id1 == unit_id2:
+            plot_autocorrelogram(sorting=S, unit_id=unit_id1, window_size_msec=300, bin_size_msec=1)
+        else:
+            plot_crosscorrelogram(sorting=S, unit_id1=unit_id1, unit_id2=unit_id2, window_size_msec=300, bin_size_msec=1)
         plt.subplots_adjust(left=0.1, right=0.95, top=0.95, bottom=0.15)
         x = mpld3.fig_to_dict(f)
         # here's how you would disable the menu button plugins:

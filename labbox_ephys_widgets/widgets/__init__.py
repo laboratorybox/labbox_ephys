@@ -5,6 +5,7 @@ from .SortingsView import SortingsView
 from .TestMpld3Widget import TestMpld3Widget
 from .SortingView import SortingView
 from .SortingUnitView import SortingUnitView
+from .SortingUnitsView import SortingUnitsView
 from .SortingUnitTemplateWidget import SortingUnitTemplateWidget
 from .SortingUnitBox import SortingUnitBox
 from .SortingUnitCorrelogramWidget import SortingUnitCorrelogramWidget

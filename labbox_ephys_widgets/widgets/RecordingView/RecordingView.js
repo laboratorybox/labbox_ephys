@@ -51,7 +51,6 @@ export default class RecordingView extends Component {
 
         let group_ids = get_all_group_ids(channel_groups || []);
 
-        console.log('recording:', recording);
         return (
             <div>
                 <RecordingViewTable

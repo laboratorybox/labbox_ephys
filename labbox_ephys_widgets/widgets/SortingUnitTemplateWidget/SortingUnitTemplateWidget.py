@@ -19,7 +19,7 @@ class SortingUnitTemplateWidget:
         self._set_status('running', 'Running SortingUnitTemplateWidget')
 
         sorting = state['sorting']
-        unit_id = state['unit_id']
+        unit_id = int(state['unit_id'])
         figsize = state['figsize']
 
         R = le.LabboxEphysRecordingExtractor(sorting['recording'])

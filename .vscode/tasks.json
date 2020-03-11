@@ -47,6 +47,18 @@
             "type": "shell",
             "command": "echo all-services",
             "dependsOn":["watch-gui", "mongodb-dev", "compute-resource-dev", "gui-dev", "jupyterlab-dev"]
+        },
+        {
+            // reactopya install-dev
+            "label": "gui-install-dev",
+            "type": "shell",
+            "command": "cd devel/tasks && bash -ic ./gui_install_dev.sh"
+        },
+        {
+            // reactopya start-dev
+            "label": "gui-start-dev",
+            "type": "shell",
+            "command": "cd devel/tasks && bash -ic ./gui_start_dev.sh"
         }
     ]
 }
