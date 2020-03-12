@@ -13,3 +13,8 @@ def remote_job_handler():
         database=database(),
         compute_resource_id=os.environ['COMPUTE_RESOURCE_ID']
     )
+
+def job_cache():
+    return hi.JobCache(
+        database=database()
+    )

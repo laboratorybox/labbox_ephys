@@ -2,16 +2,20 @@ import random
 import spikewidgets as sw
 import spiketoolkit as st
 import labbox_ephys as le
-from labbox_ephys.utils import compute_unit_templates, plot_spike_waveform
 import matplotlib as mpl
 mpl.use('Agg') # This is important for speed!
 import matplotlib.pyplot as plt
 import mpld3
 import time
+import hither2 as hi
+from .make_unit_template_figure import make_unit_template_figure
+import labbox_ephys as le
+import numpy as np
 
 class SortingUnitTemplateWidget:
     def __init__(self):
         super().__init__()
+        self._job = None
 
     def javascript_state_changed(self, prev_state, state):
         timer = time.time()
@@ -20,47 +24,43 @@ class SortingUnitTemplateWidget:
 
         sorting = state['sorting']
         unit_id = int(state['unit_id'])
-        figsize = state['figsize']
 
-        R = le.LabboxEphysRecordingExtractor(sorting['recording'])
-        S = le.LabboxEphysSortingExtractor(sorting['sorting'])
-
-        filtopts = dict(
-            freq_min=300,
-            freq_max=6000,
-            freq_wid=1000
-        )
-        template = compute_unit_templates(
-            recording=R, sorting=S,
-            unit_ids=[unit_id],
-            ms_before=2, ms_after=2,
-            max_spikes_per_unit=100,
-            filtopts=filtopts
-        )[0]
-
-        f = plt.figure(figsize=[figsize[0]/100, figsize[1]/100], dpi=100)        
-        plot_spike_waveform(template, spacing='auto', amp_scale_factor=2)
-        # plt.title(f'Unit {unit_id}')
-        x = mpld3.fig_to_dict(f)
-        # here's how you would disable the menu button plugins:
-        x['plugins'] = []
-
-
-        self._set_state(
-            plot=dict(
-                id=_random_string(10),
-                object=x
+        all_unit_ids = sorting['unit_ids']
+        with hi.config(**le.hither2_job_config()):
+            job = make_unit_template_figure.run(
+                recording=sorting['recording'],
+                sorting=sorting['sorting'],
+                unit_ids=all_unit_ids
             )
-        )
-
-        # print(f'Elapsed: {time.time() - timer} sec')
-
-        self._set_status('finished', 'Finished SortingUnitTemplateWidget')
+        unit_ind = np.where(np.array(all_unit_ids) == unit_id)[0][0]
+        setattr(job, 'unit_ind', unit_ind)
+        self._job = job
 
     def on_message(self, msg):
         # process custom messages from JavaScript here
         # In .js file, use this.pythonInterface.sendMessage({...})
         pass
+
+    def iterate(self):
+        job = self._job
+        if job is None:
+            return
+        x = job.wait(0)
+        if job.status() == 'finished':
+            unit_ind = job.unit_ind
+            self._set_state(
+                plot=dict(
+                    id=_random_string(10),
+                    object=x[unit_ind]
+                )
+            )
+            self._job = None
+            # print(f'Elapsed: {time.time() - timer} sec')
+            self._set_status('finished', 'Finished SortingUnitTemplateWidget')
+        elif job.status() == 'error':
+            self._job = None
+            # print(f'Elapsed: {time.time() - timer} sec')
+            self._set_status('finished', 'Finished SortingUnitTemplateWidget')
     
     # Send a custom message to JavaScript side
     # In .js file, use this.pythonInterface.onMessage((msg) => {...})
