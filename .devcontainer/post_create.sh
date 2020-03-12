@@ -5,6 +5,11 @@ set -ex
 sudo usermod -aG docker vscode
 newgrp docker
 
+# reactopya
+cd /workspaces/reactopya
+pip install --no-deps -e .
+echo "export PATH=/workspaces/reactopya/bin:\$PATH" >> ~/.bashrc
+
 # hither2
 cd /workspaces/hither2
 pip install --no-deps -e .

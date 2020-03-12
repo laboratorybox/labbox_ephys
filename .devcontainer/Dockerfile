@@ -89,14 +89,6 @@ RUN apt-get update && \
 RUN pip install ipython jupyter jupyterlab
 RUN pip install pymongo
 
-#########################################
-### Install reactopya
-RUN git clone https://github.com/flatironinstitute/reactopya /src/reactopya \
-    && cd /src/reactopya \
-    && git checkout 34ae0fbf512d5b8bf40a2f4483d3a6c9892b5da4 \
-    && pip install -e . \
-    && cd reactopya/reactopya_server && yarn install && yarn build && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && rm -rf /tmp/* && yarn cache clean
-
 RUN pip install --upgrade setuptools
 
 # for testing display
@@ -104,8 +96,6 @@ RUN apt-get install -y gedit
 
 # docker-compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
-
-
 
 # spikeinterface packages
 RUN pip install spikeextractors==0.7.2 spiketoolkit==0.5.2 spikesorters==0.2.5 spikewidgets==0.3.3

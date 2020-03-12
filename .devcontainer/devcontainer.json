@@ -43,6 +43,7 @@
 		// // "source=/etc/group,target=/etc/group,type=bind",
 		//"source=/home/magland/labbox_ephys_home,target=/home/vscode,type=bind,consistency=cached",
 		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
+		"source=${localEnv:REACTOPYA_SOURCE_DIR},target=/workspaces/reactopya,type=bind,consistency=cached",
 		"source=${localEnv:HITHER2_SOURCE_DIR},target=/workspaces/hither2,type=bind,consistency=cached",
 		"source=${localEnv:KACHERY_SOURCE_DIR},target=/workspaces/kachery,type=bind,consistency=cached",
 		"source=${localEnv:SPIKEFOREST2_SOURCE_DIR},target=/workspaces/spikeforest2,type=bind,consistency=cached",

@@ -28,7 +28,7 @@ RUN mkdir -p /src
 ### Install reactopya
 RUN git clone https://github.com/flatironinstitute/reactopya /src/reactopya \
     && cd /src/reactopya \
-    && git checkout 34ae0fbf512d5b8bf40a2f4483d3a6c9892b5da4 \
+    && git checkout 2ea26d17d37ad146e44867f5909eabd8f548d949 \
     && pip install -e . \
     && cd reactopya/reactopya_server && yarn install && yarn build && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && rm -rf /tmp/* && yarn cache clean
 

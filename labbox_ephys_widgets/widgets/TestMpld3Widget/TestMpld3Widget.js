@@ -35,6 +35,9 @@ export default class TestMpld3Widget extends Component {
         const plot = this.state.plot;
         if (plot) {
             if (!this.renderedPlots[plot.id]) {
+                plot.object.width = this.props.width;
+                plot.object.height = this.props.height;
+                console.log(plot.object);
                 mpld3.draw_figure(plot.id, plot.object);
                 this.renderedPlots[plot.id] = true;
             }
