@@ -20,13 +20,17 @@ class SortingUnitTemplateWidget:
     def javascript_state_changed(self, prev_state, state):
         timer = time.time()
 
+        print('SortingUnitTemplateWidget 1')
+
         self._set_status('running', 'Running SortingUnitTemplateWidget')
 
         sorting = state['sorting']
         unit_id = int(state['unit_id'])
 
         all_unit_ids = sorting['unit_ids']
-        with hi.config(**le.hither2_job_config()):
+        config = le.hither2_job_config()
+
+        with hi.config(**config):
             job = make_unit_template_figure.run(
                 recording=sorting['recording'],
                 sorting=sorting['sorting'],
@@ -35,8 +39,10 @@ class SortingUnitTemplateWidget:
         unit_ind = np.where(np.array(all_unit_ids) == unit_id)[0][0]
         setattr(job, 'unit_ind', unit_ind)
         self._job = job
+        print('SortingUnitTemplateWidget 2')
 
     def on_message(self, msg):
+
         # process custom messages from JavaScript here
         # In .js file, use this.pythonInterface.sendMessage({...})
         pass
@@ -45,8 +51,10 @@ class SortingUnitTemplateWidget:
         job = self._job
         if job is None:
             return
+        print('SortingUnitTemplateWidget 3')
         x = job.wait(0)
         if job.status() == 'finished':
+            print('SortingUnitTemplateWidget 4')
             unit_ind = job.unit_ind
             self._set_state(
                 plot=dict(

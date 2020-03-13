@@ -28,7 +28,7 @@ RUN mkdir -p /src
 ### Install reactopya
 RUN git clone https://github.com/flatironinstitute/reactopya /src/reactopya \
     && cd /src/reactopya \
-    && git checkout 2ea26d17d37ad146e44867f5909eabd8f548d949 \
+    && git checkout 8dda2c509f705ce81def848b993ff9517858f645 \
     && pip install -e . \
     && cd reactopya/reactopya_server && yarn install && yarn build && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && rm -rf /tmp/* && yarn cache clean
 
@@ -65,7 +65,7 @@ RUN pip install .
 ### Install hither2
 RUN git clone https://github.com/laboratorybox/hither2 /src/hither2 \
     && cd /src/hither2 \
-    && git checkout bdcf2161a523c3098bb18dd6997741dc0151ca93 \
+    && git checkout 4bb5e1caeb248ebd1f8f1f835f6c64042d68ddb3 \
     && pip install -e .
 
 ### Install docker
