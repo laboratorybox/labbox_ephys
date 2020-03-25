@@ -39,6 +39,8 @@ export LABBOX_EPHYS_MONGO_DATA_DIR=/some/path/to/labbox_ephys_mongo_data
 export LABBOX_EPHYS_HOME=/some/path/to/labbox_ephys_home
 ```
 
+Then to make sure these take effect, log out and log back in again
+
 ## Installation
 
 First, clone the repository:

@@ -48,7 +48,7 @@
 		"source=${localEnv:KACHERY_SOURCE_DIR},target=/workspaces/kachery,type=bind,consistency=cached",
 		"source=${localEnv:SPIKEFOREST2_SOURCE_DIR},target=/workspaces/spikeforest2,type=bind,consistency=cached",
 		// // "source=${localEnv:MONGO_DATA_DIR},target=/data/db,type=bind,consistency=cached"
-		"source=/home/magland/labbox_ephys_mongo_data,target=/data/db,type=bind,consistency=cached"
+		"source=${localEnv:LABBOX_EPHYS_MONGO_DATA_DIR},target=/data/db,type=bind,consistency=cached"
 
 		// So that installed vscode extensions persist between builds
 		// See: https://code.visualstudio.com/docs/remote/containers-advanced#_avoiding-extension-reinstalls-on-container-rebuild
