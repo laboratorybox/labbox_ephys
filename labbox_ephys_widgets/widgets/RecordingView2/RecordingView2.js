@@ -32,7 +32,7 @@ export default class RecordingView2 extends Component {
     }
     render() {
         return <div>
-            This is a test.
+            This is a test Fan Wu.
         </div>
     }
 }
