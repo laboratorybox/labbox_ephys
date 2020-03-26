@@ -12,3 +12,4 @@ from .SortingUnitCorrelogramWidget import SortingUnitCorrelogramWidget
 from .RecordingView import RecordingView
 from .TimeseriesView import TimeseriesView
 from .ElectrodeGeometry import ElectrodeGeometry
+from .RecordingView2 import RecordingView2

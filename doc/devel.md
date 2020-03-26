@@ -62,3 +62,32 @@ There will be a green button in the lower-left part of the vscode window. Click 
 
 This will begin building a docker image and open the development environment inside the container. See the .devcontainer directory for information about exactly what is being installed.
 
+## Do a one-time installation of the reactopya server
+
+Within the container
+
+```
+cd /workspaces/reactopya/reactopya/reactopya_server
+yarn install
+yarn build
+```
+
+## 
+
+## Start the services within the container
+
+USe `Ctrl+Shift+P` to open the vscode command window and then run the `Run Task` command. Select to run the `all-services` task.
+
+## Open a browser
+
+## To develop individual services
+
+First run the task: gui-install-dev
+
+Start the mongo database by running the task: mongodb-dev
+
+Then run the task: gui-start-dev
+
+Then open a web brower to http://localhost:5050
+
+Open labbox_ephys_widgets/dev_widget.json

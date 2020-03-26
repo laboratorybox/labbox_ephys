@@ -12,3 +12,4 @@ export { default as SortingUnitCorrelogramWidget } from './SortingUnitCorrelogra
 export { default as RecordingView } from './RecordingView/RecordingView';
 export { default as TimeseriesView } from './TimeseriesView/TimeseriesView';
 export { default as ElectrodeGeometry } from './ElectrodeGeometry/ElectrodeGeometry';
+export { default as RecordingView2 } from './RecordingView2/RecordingView2';

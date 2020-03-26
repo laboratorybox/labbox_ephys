@@ -109,6 +109,8 @@ RUN pip install pylint ipython pytest pytest-cov
 # In order to run the electron app:
 RUN apt-get install -y libasound2 libnss3-dev
 
+RUN pip install simplejson mpld3
+
 # RUn apt-get install -y libgtk3.0-cil-dev libgtk2.0.0 libnss3-dev libx11-xcb1
 # RUN apt-get install -y libasound2
 # RUN npm install -g electron

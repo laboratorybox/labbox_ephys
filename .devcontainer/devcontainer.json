@@ -48,7 +48,9 @@
 		"source=${localEnv:KACHERY_SOURCE_DIR},target=/workspaces/kachery,type=bind,consistency=cached",
 		"source=${localEnv:SPIKEFOREST2_SOURCE_DIR},target=/workspaces/spikeforest2,type=bind,consistency=cached",
 		// // "source=${localEnv:MONGO_DATA_DIR},target=/data/db,type=bind,consistency=cached"
-		"source=${localEnv:LABBOX_EPHYS_MONGO_DATA_DIR},target=/data/db,type=bind,consistency=cached"
+		"source=${localEnv:LABBOX_EPHYS_MONGO_DATA_DIR},target=/data/db,type=bind,consistency=cached",
+		"source=${localEnv:LABBOX_EPHYS_DATA_DIR},target=/data/local-data,type=bind,consistency=cached",
+		"source=${localEnv:LABBOX_EPHYS_HOME},target=/home/labbox,type=bind,consistency=cached",
 
 		// So that installed vscode extensions persist between builds
 		// See: https://code.visualstudio.com/docs/remote/containers-advanced#_avoiding-extension-reinstalls-on-container-rebuild
@@ -60,10 +62,10 @@
 		"KACHERY_DEFAULT_PASSWORD": "${localEnv:KACHERY_DEFAULT_PASSWORD}",
 		"LABBOX_EPHYS_PORT": "${localEnv:LABBOX_EPHYS_PORT}",
 		"LABBOX_EPHYS_JUPYTERLAB_PORT": "${localEnv:LABBOX_EPHYS_JUPYTERLAB_PORT}",
-		"LABBOX_EPHYS_DATA_DIR": "${localEnv:LABBOX_EPHYS_DATA_DIR}",
-		"LABBOX_EPHYS_MONGO_DATA_DIR": "${localEnv:LABBOX_EPHYS_MONGO_DATA_DIR}",
-		"LABBOX_EPHYS_HOME": "${localEnv:LABBOX_EPHYS_HOME}",
-		"LABBOX_EPHYS_SOURCE_DIR": "${localEnv:LABBOX_EPHYS_SOURCE_DIR}",
+		"LABBOX_EPHYS_DATA_DIR": "/data/local-data",
+		"LABBOX_EPHYS_MONGO_DATA_DIR": "/data/db",
+		"LABBOX_EPHYS_HOME": "/home/labbox",
+		"LABBOX_EPHYS_SOURCE_DIR": "/workspaces/labbox_ephys",
 		"SPIKEFOREST_COMPUTE_RESOURCE_READWRITE_PASSWORD": "${localEnv:SPIKEFOREST_COMPUTE_RESOURCE_READWRITE_PASSWORD}",
 		"DISPLAY": "${localEnv:DISPLAY}",
 		"HOME": "/home/vscode",
