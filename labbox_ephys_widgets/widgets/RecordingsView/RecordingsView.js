@@ -34,6 +34,9 @@ export default class RecordingsView extends Component {
     _handleDeleteRecordings = (recordingIds) => {
         this.pythonInterface.sendMessage({action: 'remove_recordings', recording_ids: recordingIds});
     }
+    _handleSortRecordings = (recordingIds, sorter) => {
+        this.pythonInterface.sendMessage({action: 'sort_recordings', recording_ids: recordingIds, sorter: sorter});
+    }
     render() {
         const recordings = this.state.recordings;
 
@@ -47,6 +50,7 @@ export default class RecordingsView extends Component {
             <RecordingsTable
                 recordings={recordings}
                 onDeleteRecordings={this._handleDeleteRecordings}
+                onSortRecordings={this._handleSortRecordings}
             />
         );
     }

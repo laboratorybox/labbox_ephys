@@ -2,7 +2,27 @@
 import React, { Component } from 'react';
 import { Toolbar, IconButton } from '@material-ui/core';
 import { FaTrash } from 'react-icons/fa';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import LBTable from './LBTable';
+
+const sorter_options = [
+    {
+        label: 'MountainSort4',
+        sorter: {
+            name: "mountainsort4",
+            parameters: {}
+        }
+    },
+    {
+        label: 'KiloSort2',
+        sorter: {
+            name: "kilosort2",
+            parameters: {}
+        }
+    }
+];
 
 export default class RecordingsTable extends Component {
     state = {
@@ -10,6 +30,9 @@ export default class RecordingsTable extends Component {
     }
     _handleDeleteSelectedRecordings = () => {
         this.props.onDeleteRecordings && this.props.onDeleteRecordings(Object.keys(this.state.selectedRecordingIds));
+    }
+    _handleSortSelectedRecordings = (sorter) => {
+        this.props.onSortRecordings && this.props.onSortRecordings(Object.keys(this.state.selectedRecordingIds), sorter);
     }
     render() {
         const { recordings } = this.props;
@@ -37,6 +60,11 @@ export default class RecordingsTable extends Component {
                     <IconButton disabled={isEmpty(selectedRecordingIds)} title={"Delete selected recordings"} onClick={() => {this._handleDeleteSelectedRecordings()}}>
                         <FaTrash />
                     </IconButton>
+                    <DropdownMenu
+                        label="Spike sorting"
+                        options={sorter_options}
+                        onSorterSelected={(sorter) => {this._handleSortSelectedRecordings(sorter)}}
+                    />
                 </Toolbar>
                 <LBTable
                     columns={columns}
@@ -48,6 +76,41 @@ export default class RecordingsTable extends Component {
             </div>
         );
     }
+}
+
+function DropdownMenu(props) {
+
+    // return <div>Testing..... {JSON.stringify(props)}</div>;
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    return (
+        <div>
+        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+            {props.label}
+        </Button>
+        <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+        >
+            {
+                props.options.map((option) => {
+                    return <MenuItem onClick={() => {handleClose(); props.onSorterSelected(option.sorter);}} key={option.label}>{option.label}</MenuItem>
+                })
+            }
+        </Menu>
+        </div>
+    );
 }
 
 function isEmpty(obj) {

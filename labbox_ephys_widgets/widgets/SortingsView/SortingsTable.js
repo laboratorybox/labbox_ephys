@@ -29,7 +29,7 @@ export default class SortingsTable extends Component {
                     recording: {content: rec.recording_id, href: href, target: target},
                     group: {content: rec.group_id, href: href, target: target},
                     sorter_name: {content: rec.sorter_name, href: href, target: target},
-                    nunits: {content: rec.unit_ids.length, href: href, target: target}
+                    nunits: {content: rec.unit_ids ? rec.unit_ids.length : '', href: href, target: target}
                 }
             }
         });
