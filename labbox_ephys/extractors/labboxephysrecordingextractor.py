@@ -29,7 +29,7 @@ class LabboxEphysRecordingExtractor(se.RecordingExtractor):
             
             if type(arg) == str or isinstance(arg, hi.File):
                 path = _path(arg)
-                if path.startswith('sha1dir'):
+                if path.startswith('sha1dir') or path.startswith('/'):
                     if can_load_mda(path):
                         self._recording = MdaRecordingExtractor(recording_directory=path, download=download)
                     elif can_load_nrs(path):
