@@ -5,21 +5,22 @@ class SortingsView:
         super().__init__()
 
     def javascript_state_changed(self, prev_state, state):
-        self._set_status('running', 'Loading sortings...')
-
         self._refresh_sortings()
-
-        self._set_status('finished', 'Finished loading sortings.')
 
     def on_message(self, msg):
         if msg['action'] == 'remove_sortings':
             sorting_ids = msg['sorting_ids']
             remove(collection='sortings', query={'sorting_id': {'$in': sorting_ids}})
-        self._refresh_sortings()
+            self._refresh_sortings()
+        elif msg['action'] == 'refresh_sortings':
+            self._refresh_sortings()
     
     def _refresh_sortings(self):
+        self._set_status('running', 'Loading sortings...')
+        self._set_state(sortings=None)
         sortings = find(collection='sortings', query=dict())
         self._set_state(sortings=sortings)
+        self._set_status('finished', f'Finished loading {len(sortings)} sortings.')
     
     # Send a custom message to JavaScript side
     # In .js file, use this.pythonInterface.onMessage((msg) => {...})

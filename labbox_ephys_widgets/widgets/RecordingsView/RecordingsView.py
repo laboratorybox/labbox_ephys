@@ -7,16 +7,15 @@ class RecordingsView:
         super().__init__()
 
     def javascript_state_changed(self, prev_state, state):
-        self._set_status('running', 'Loading recordings...')
-
         self._refresh_recordings()
-
-        self._set_status('finished', 'Finished loading recordings.')
 
     def on_message(self, msg):
         if msg['action'] == 'remove_recordings':
             recording_ids = msg['recording_ids']
             dbcollection('recordings').remove({'recording_id': {'$in': recording_ids}})
+            self._refresh_recordings()
+        if msg['action'] == 'refresh_recordings':
+            self._refresh_recordings()
         if msg['action'] == 'sort_recordings':
             recording_ids = msg['recording_ids']
             sorter = msg['sorter']
@@ -41,15 +40,22 @@ class RecordingsView:
                         sorter_name=sorter['name'],
                         sorting_id=sorting_id,
                         unit_ids=None,
-                        runtime_info=None
+                        runtime_info=None,
+                        status='pending'
                     )
-                    dbcollection('sortings').replace_one(dict(sorting_id=sorting_id), doc, upsert=True)
+                    if dbcollection('sortings').find(dict(sorting_id=sorting_id)).count() == 0:
+                        dbcollection('sortings').insert_one(doc)
+                    else:
+                        print(f'Not inserting sorting because it already exists: {sorting_id}')
             # dbcollection('recordings').remove({'recording_id': {'$in': recording_ids}})
-        self._refresh_recordings()
+            self._refresh_recordings()
+        
     
     def _refresh_recordings(self):
+        self._set_status('running', 'Loading recordings...')
         recordings = list(dbcollection('recordings').find(dict()))
         self._set_state(recordings=recordings)
+        self._set_status('finished', 'Finished loading recordings.')
     
     # Send a custom message to JavaScript side
     # In .js file, use this.pythonInterface.onMessage((msg) => {...})

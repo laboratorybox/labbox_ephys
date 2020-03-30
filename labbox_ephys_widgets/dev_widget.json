@@ -3,7 +3,7 @@
         "type": "TestMpld3Widget",
         "props": {}
     },
-    "widget": {
+    "widget_rsv": {
         "type": "RecordingsView",
         "props": {}
     },
@@ -124,11 +124,11 @@
             "height": 250
         }
     },
-    "widget_ss": {
+    "widget_ssv": {
         "type": "SortingsView",
         "props": {}
     },
-    "widget_mw": {
+    "widget": {
         "type": "MainWidget",
         "props": {}
     }

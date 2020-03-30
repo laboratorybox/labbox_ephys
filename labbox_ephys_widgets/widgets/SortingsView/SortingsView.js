@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { PythonInterface } from 'reactopya';
 import SortingsTable from './SortingsTable.js'
+import { Toolbar, IconButton } from '@material-ui/core';
+import { FaTrash, FaSync } from 'react-icons/fa';
 const config = require('./SortingsView.json');
 
 export default class SortingsView extends Component {
@@ -14,7 +16,10 @@ export default class SortingsView extends Component {
             // python state
             sortings: null,
             status: '',
-            status_message: ''
+            status_message: '',
+
+            //
+            selectedSortingIds: {}
         }
     }
     componentDidMount() {
@@ -31,23 +36,52 @@ export default class SortingsView extends Component {
     componentWillUnmount() {
         this.pythonInterface.stop();
     }
-    _handleDeleteSortings = (sortingIds) => {
-        this.pythonInterface.sendMessage({action: 'remove_sortings', sorting_ids: sortingIds});
+    _handleDeleteSelectedSortings = () => {
+        const selectedSortingIds = this.state.selectedSortingIds;
+        this.pythonInterface.sendMessage({action: 'remove_sortings', sorting_ids: Object.keys(selectedSortingIds)});
+    }
+    _handleRefreshSortings = () => {
+        this.setState({
+            sortings: null,
+            status: '',
+            status_message: ''
+        });
+        this.pythonInterface.sendMessage({action: 'refresh_sortings'});
     }
     render() {
         const sortings = this.state.sortings;
+        const selectedSortingIds = this.state.selectedSortingIds;
 
-        if (!sortings) {
-            return (
+        let content;
+        if (sortings) {
+            content = (
+                <SortingsTable
+                    sortings={sortings}
+                    selectedSortingIds={selectedSortingIds}
+                    onSelectedSortingIdsChanged={(ids) => {this.setState({selectedSortingIds: ids})}}
+                />
+            )
+        }
+        else {
+            content = (
                 <ReportStatus {...this.state} />
             );
         }
 
         return (
-            <SortingsTable
-                sortings={sortings}
-                onDeleteSortings={this._handleDeleteSortings}
-            />
+            <div>
+                <Toolbar>
+                    <IconButton title={"Refresh sortings"} onClick={() => {this._handleRefreshSortings()}}>
+                        <FaSync />
+                    </IconButton>
+                    <IconButton disabled={isEmpty(selectedSortingIds)} title={"Delete selected sortings"} onClick={() => {this._handleDeleteSelectedSortings()}}>
+                        <FaTrash />
+                    </IconButton>
+                </Toolbar>
+                <div style={{height: 250, overflowY: 'auto'}}>
+                    {content}
+                </div>
+            </div>
         );
     }
 }
@@ -68,4 +102,8 @@ class ReportStatus extends Component {
                 return <div>Unknown status: {this.props.status}</div>;
         }
     }
+}
+
+function isEmpty(obj) {
+    return (Object.getOwnPropertyNames(obj).length == 0);
 }

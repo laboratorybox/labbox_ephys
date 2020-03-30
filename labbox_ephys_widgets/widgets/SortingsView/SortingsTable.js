@@ -1,57 +1,39 @@
 
 import React, { Component } from 'react';
-import { Toolbar, IconButton } from '@material-ui/core';
-import { FaTrash } from 'react-icons/fa';
 import LBTable from './LBTable';
 
 export default class SortingsTable extends Component {
-    state = {
-        selectedSortingIds: {}
-    }
-    _handleDeleteSelectedSortings = () => {
-        this.props.onDeleteSortings && this.props.onDeleteSortings(Object.keys(this.state.selectedSortingIds));
-    }
     render() {
-        const { sortings } = this.props;
-        const { selectedSortingIds } = this.state
+        const { sortings, selectedSortingIds } = this.props;
         let columns = [
+            {id: 'status', label: 'Status'},
+            {id: 'sorter_name', label: 'Sorter'},
             {id: 'recording', label: 'Recording'},
             {id: 'group', label: 'Group/Shank'},
-            {id: 'sorter_name', label: 'Sorter'},
             {id: 'nunits', label: 'Num. units'}
         ];
-        let rows = sortings.map((rec) => {
-            const href = `sortingview?sorting_id=${rec.sorting_id}`;
+        let rows = sortings.map((sorting) => {
+            const href = `sortingview?sorting_id=${sorting.sorting_id}`;
             const target = '_blank'
             return {
-                id: rec.sorting_id,
+                id: sorting.sorting_id,
                 cells: {
-                    recording: {content: rec.recording_id, href: href, target: target},
-                    group: {content: rec.group_id, href: href, target: target},
-                    sorter_name: {content: rec.sorter_name, href: href, target: target},
-                    nunits: {content: rec.unit_ids ? rec.unit_ids.length : '', href: href, target: target}
+                    status: {content: sorting.status || 'unknown', href: href, target: target},
+                    recording: {content: sorting.recording_id},
+                    group: {content: sorting.group_id},
+                    sorter_name: {content: sorting.sorter_name},
+                    nunits: {content: sorting.unit_ids ? sorting.unit_ids.length : ''}
                 }
             }
         });
         return (
-            <div>
-                <Toolbar>
-                    <IconButton disabled={isEmpty(selectedSortingIds)} title={"Delete selected sortings"} onClick={() => {this._handleDeleteSelectedSortings()}}>
-                        <FaTrash />
-                    </IconButton>
-                </Toolbar>
-                <LBTable
-                    columns={columns}
-                    rows={rows}
-                    rowSelectionMode="multi"
-                    selectedRowIds={selectedSortingIds}
-                    onSelectedRowIdsChanged={(ids) => {this.setState({selectedSortingIds: ids})}}
-                />
-            </div>
+            <LBTable
+                columns={columns}
+                rows={rows}
+                rowSelectionMode="multi"
+                selectedRowIds={selectedSortingIds}
+                onSelectedRowIdsChanged={(ids) => {this.props.onSelectedSortingIdsChanged(ids)}}
+            />
         );
     }
-}
-
-function isEmpty(obj) {
-    return (Object.getOwnPropertyNames(obj).length == 0);
 }

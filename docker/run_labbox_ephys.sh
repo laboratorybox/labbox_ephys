@@ -63,7 +63,7 @@ docker build \
 docker stop labbox_ephys_compute_resource || true
 docker rm labbox_ephys_compute_resource || true
 
-docker pull mongo:latest
+docker pull mongo:4.2.5
 docker-compose rm -sf mongodb || true
 docker-compose rm -sf jupyterlab || true
 docker-compose rm -sf gui || true

@@ -58,7 +58,7 @@ services:
     command: "bash -c \"sudo usermod -aG docker labbox && newgrp docker && groups labbox && groups && cat /etc/group && ls -l /var/run/docker.sock && whoami && id -u && groups && sleep 2 && docker run hello-world && hither2-compute-resource start\""
     # command: "bash -c \"sleep 1 && docker run hello-world && hither2-compute-resource start\""
   mongodb:
-    image: mongo:latest
+    image: mongo:4.2.5
     container_name: mongodb
     restart: always
     volumes:
