@@ -2,4 +2,4 @@
 
 set -e
 
-reactopya-server ../../labbox_ephys_widgets/app/app.json --port 5001
+reactopya-server ../../labbox_ephys_widgets/app/app.json --port $LABBOX_EPHYS_PORT

@@ -2,6 +2,8 @@ import argparse
 import labbox_ephys_widgets as lew
 import kachery as ka
 
+ka.set_config(fr='labbox_ephys_readonly')
+
 lew.init_electron()
 
 parser = argparse.ArgumentParser(description='View a sorting result')

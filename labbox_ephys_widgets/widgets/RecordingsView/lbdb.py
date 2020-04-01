@@ -45,7 +45,7 @@ class _MongoClient:
 _global_client = _MongoClient()
 
 _global_config = dict(
-    url=os.getenv('MONGO_URI'),
+    url=os.getenv('LABBOX_EPHYS_MONGO_URI'),
     database='labbox'
 )
 

@@ -5,12 +5,6 @@
     "version": "2.0.0",
     "tasks": [
         {
-            // Start the mongodb for dev
-            "label": "mongodb-dev",
-            "type": "shell",
-            "command": "cd devel/tasks && bash -ic ./run_mongodb_dev.sh"
-        },
-        {
             // Start the jupyterlab for dev
             "label": "jupyterlab-dev",
             "type": "shell",
@@ -40,13 +34,6 @@
             "label": "gui-dev",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./run_gui.sh"
-        },
-        {
-            // Start all the dev services
-            "label": "all-services",
-            "type": "shell",
-            "command": "echo all-services",
-            "dependsOn":["watch-gui", "mongodb-dev", "compute-resource-dev", "gui-dev", "jupyterlab-dev"]
         },
         {
             // reactopya install-dev

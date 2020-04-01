@@ -3,6 +3,8 @@ import labbox_ephys_widgets as lew
 import labbox_ephys as le
 import kachery as ka
 
+ka.set_config(fr='labbox_ephys_readonly')
+
 lew.init_electron()
 
 ka.set_config(fr='default_readonly')

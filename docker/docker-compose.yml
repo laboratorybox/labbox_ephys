@@ -12,7 +12,7 @@ services:
       - "${LABBOX_EPHYS_DATA_DIR}:/data/local-data"
     environment:
       - KACHERY_STORAGE_DIR=${KACHERY_STORAGE_DIR}
-      - MONGO_URI=mongodb://mongodb:27017
+      - LABBOX_EPHYS_MONGO_URI=${LABBOX_EPHYS_MONGO_URI}
       - COMPUTE_RESOURCE_ID=labbox-ephys
       - JUPYTERLAB_PORT=${LABBOX_EPHYS_JUPYTERLAB_PORT}
       - KILL_CODE=${LABBOX_EPHYS_KILL_CODE}
@@ -33,7 +33,7 @@ services:
     environment:
       - KACHERY_STORAGE_DIR=${KACHERY_STORAGE_DIR}
       - JUPYTERLAB_TOKEN
-      - MONGO_URI=mongodb://mongodb:27017
+      - LABBOX_EPHYS_MONGO_URI=${LABBOX_EPHYS_MONGO_URI}
       - COMPUTE_RESOURCE_ID=labbox-ephys
       - HOME=/home/labbox
     # user: "${USER_ID}:${GROUP_ID}"
@@ -48,7 +48,7 @@ services:
       - "${LABBOX_EPHYS_HOME}:/home/labbox:cached"
     environment:
       - KACHERY_STORAGE_DIR=${KACHERY_STORAGE_DIR}
-      - MONGO_URI=mongodb://mongodb:27017
+      - LABBOX_EPHYS_MONGO_URI=${LABBOX_EPHYS_MONGO_URI}
       - COMPUTE_RESOURCE_ID=labbox-ephys
       - HOME=/home/labbox
     # user: "${USER_ID}:${GROUP_ID}"
