@@ -125,3 +125,4 @@ RUN pip install simplejson mpld3
 # ### Install spikeforest_widgets
 # WORKDIR /src/spikeforest2/spikeforest_widgets
 # RUN reactopya install && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && rm -rf /tmp/* && yarn cache clean
+

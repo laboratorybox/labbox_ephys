@@ -25,13 +25,19 @@
         },
         {
             // Start the GUI
-            "label": "build-gui-dev",
+            "label": "build-gui",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./build_gui.sh"
         },
         {
             // Start the GUI
-            "label": "gui-dev",
+            "label": "build-gui-short",
+            "type": "shell",
+            "command": "cd devel/tasks && bash -ic ./build_gui_short.sh"
+        },
+        {
+            // Start the GUI
+            "label": "gui",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./run_gui.sh"
         },
