@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import argparse
+import labbox_ephys as le
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Labbox-ephys processing daemon")
+    parser.add_argument(
+        'command', help='One of the following: run')
+
+    args = parser.parse_args()
+    command = args.command
+
+    if command == 'run':
+        D = le.ProcessingDaemon()
+        D.run()
+    else:
+        raise Exception(f'Invalid command: {command}')
+
+if __name__ == '__main__':
+    main()
