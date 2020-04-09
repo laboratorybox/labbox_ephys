@@ -31,6 +31,15 @@
         },
         {
             // Start the GUI
+<<<<<<< HEAD
+=======
+            "label": "build-gui-short",
+            "type": "shell",
+            "command": "cd devel/tasks && bash -ic ./build_gui_short.sh"
+        },
+        {
+            // Start the GUI
+>>>>>>> dfd1d91ccd0485c2081a23bd86873448e451786e
             "label": "gui",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./run_gui.sh"

@@ -2,13 +2,21 @@
 
 ## Prerequisites
 
-Recommended operating system: Linux
+Pperating system: Linux or Mac
 
 Install the following
 * vscode
+    - Ensure that `code` is available on command-line
+    - [On Mac](https://code.visualstudio.com/docs/setup/mac)
+    - On Linux there are various guides
 * docker
+    - Ensure that `docker` is available on command-line
+    - [On Mac](https://docs.docker.com/docker-for-mac/install/)
+    - [On Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04)
 
 ## Clone some repositories
+
+First you should create a directory on your machine where source code will be stored. Let's call it `/some/path/to/src`.
 
 ```
 cd /some/path/to/src
@@ -21,7 +29,10 @@ git clone https://github.com/flatironinstitute/spikeforest2
 
 ## Set some environment variables
 
-Add the following lines to ~/.bashrc file (substituting as needed)
+Add the following lines to ~/.bashrc or ~/.bash_profile file (substituting as needed).
+
+**Important:** After modifying these variables, log out and log back in again to make sure that they take effect.
+
 
 ```
 export KACHERY_STORAGE_DIR=/some_path/to/large/temporary/files
@@ -41,8 +52,6 @@ export LABBOX_EPHYS_MONGO_URI="fill-in-the-mongo-uri"
 export LABBOX_EPHYS_KACHERY_READWRITE_PASSWORD="fill-in-the-password"
 ```
 
-**Important:** After modifying these variables, log out and log back in again to make sure that they take effect.
-
 ## Installation
 
 Switch to the labbox_ephys source directory (cloned above) and open in vscode
@@ -56,41 +65,33 @@ Install the following vscode extension: ms-vscode-remote.remote-containers
 
 There will be a green button in the lower-left part of the vscode window. Click on that and select the "reopen in container".
 
-This will begin building a docker image and open the development environment inside the container. See the .devcontainer directory for information about exactly what is being installed.
+This will begin building a docker image and open the development environment inside the container. See the .devcontainer directory for information about exactly what is being installed in the container.
 
-**Important:** If environment variables or the content of the .devcontainer have changed, you will also need to rebuild the container.
+**Important:** If environment variables or the content of the .devcontainer have changed, you will also need to rebuild the container. As mentioned above, you must log out of the operating system and then back in again if environment variables have changed.
 
-## Do a one-time installation of the reactopya server
+## Install the GUI within the container
 
-Within the container
+Use `Ctrl+Shift+P` (`Cmd+Shift+P` on Mac) to open the vscode command window and then run the `Run Task` command. You will see a list of development tasks.
 
-```
-cd /workspaces/reactopya/reactopya/reactopya_server
-yarn install
-yarn build
-```
-
-## Start the services within the container
-
-Use `Ctrl+Shift+P` to open the vscode command window and then run the `Run Task` command. You will see a list of development tasks.
-
-Each time you open the reopen the development environment in the vscode container, you will need to rebuild the application by running the `build-gui-dev` task.
+Each time you open the reopen the development environment in the vscode container, you will need to rebuild the application by running the `build-gui` task. Or if not much has changed in the source code, the `build-gui-short` may be all that is needed.
 
 To start the system application in development mode, run the the following services:
-* `gui-dev`
-* `compute-resource-dev`
-* `jupyterlab-dev`
+* `gui`
+* `compute-resource`
+* `jupyterlab`
 
-## Open a browser
+## Open the GUI in a browser
 
-Point google chrome to `http://localhost:5001/app/labbox_ephys
+Point google chrome to `http://localhost:5001/app/labbox_ephys`
+
+where 5001 can be replaced by the $LABBOX_EPHYS_PORT chosen above
 
 ## To develop individual widgets
 
-First run the task: gui-install-dev
+First run the task: `gui-install-dev`
 
-Then run the task: gui-start-dev
+Then run the task: `gui-start-dev`
 
-Then open a web browser to http://localhost:5050
+Then open a web browser to `http://localhost:5050`
 
-Open labbox_ephys_widgets/dev_widget.json
+Open `labbox_ephys_widgets/dev_widget.json`
