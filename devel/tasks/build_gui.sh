@@ -9,4 +9,4 @@ reactopya install || true
 cd generated/labbox_ephys_widgets
 pip install --no-deps -e .
 
-cd ../../../reactopya/reactopya/reactopya_server && yarn install && yarn build
+cd ../../../../reactopya/reactopya/reactopya_server && yarn install && yarn build

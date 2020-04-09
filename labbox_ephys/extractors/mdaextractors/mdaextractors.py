@@ -32,13 +32,15 @@ class MdaRecordingExtractor(RecordingExtractor):
             path0 = ka.load_file(path=self._timeseries_path)
             if not path0:
                 raise Exception('Unable to download file: ' + self._timeseries_path)
-            if geom_path is not None:
-                if not ka.load_file(geom_path):
-                    raise Exception('Unable to download file: ' + geom_path)
-            if params_path is not None:
-                if not ka.load_file(params_path):
-                    raise Exception('Unable to download file: ' + params_path)
-            self._timeseries_path = path0
+        else:
+            path0 = self._timeseries_path
+        if geom_path is not None:
+            if not ka.load_file(geom_path):
+                raise Exception('Unable to download file: ' + geom_path)
+        if params_path is not None:
+            if not ka.load_file(params_path):
+                raise Exception('Unable to download file: ' + params_path)
+        self._timeseries_path = path0
 
         self._timeseries = DiskReadMda(self._timeseries_path)
         if self._timeseries is None:

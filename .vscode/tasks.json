@@ -24,22 +24,19 @@
             "command": "cd devel/tasks && bash -ic ./watch_gui.sh"
         },
         {
-            // Start the GUI
+            // Build the gui
             "label": "build-gui",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./build_gui.sh"
         },
         {
-            // Start the GUI
-<<<<<<< HEAD
-=======
+            // Build the gui (short)
             "label": "build-gui-short",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./build_gui_short.sh"
         },
         {
             // Start the GUI
->>>>>>> dfd1d91ccd0485c2081a23bd86873448e451786e
             "label": "gui",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./run_gui.sh"

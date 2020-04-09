@@ -57,11 +57,12 @@ export default class RecordingsView extends Component {
         this.pythonInterface.stop();
     }
     _handleDeleteSelectedRecordings = () => {
-        const recordingIds = this.state.selectedRecordingIds;
+        const recordingIds = Object.keys(this.state.selectedRecordingIds);
+        console.log('--- recording ids', recordingIds);
         this.pythonInterface.sendMessage({action: 'remove_recordings', recording_ids: recordingIds});
     }
     _handleSortSelectedRecordings = (sorter) => {
-        const recordingIds = this.state.selectedRecordingIds;
+        const recordingIds = Object.keys(this.state.selectedRecordingIds);
         this.pythonInterface.sendMessage({action: 'sort_recordings', recording_ids: recordingIds, sorter: sorter});
     }
     _handleRefreshRecordings = () => {

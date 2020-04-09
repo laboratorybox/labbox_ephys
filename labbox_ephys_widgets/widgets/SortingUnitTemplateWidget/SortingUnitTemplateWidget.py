@@ -11,6 +11,7 @@ import hither2 as hi
 from .make_unit_template_figure import make_unit_template_figure
 import labbox_ephys as le
 import numpy as np
+import kachery as ka
 
 class SortingUnitTemplateWidget:
     def __init__(self):
@@ -31,6 +32,8 @@ class SortingUnitTemplateWidget:
         config = le.hither2_job_config()
 
         with hi.config(**config):
+            print('----------', sorting)
+            print('----------', sorting['recording'])
             job = make_unit_template_figure.run(
                 recording=sorting['recording'],
                 sorting=sorting['sorting'],
@@ -51,10 +54,8 @@ class SortingUnitTemplateWidget:
         job = self._job
         if job is None:
             return
-        print('SortingUnitTemplateWidget 3')
         x = job.wait(0)
         if job.status() == 'finished':
-            print('SortingUnitTemplateWidget 4')
             unit_ind = job.unit_ind
             self._set_state(
                 plot=dict(

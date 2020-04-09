@@ -48,6 +48,7 @@ export default class SortingUnitTemplateWidget extends Component {
         }
     }
     update() {
+        console.log('------- sorting', sorting);
         this.pythonInterface.setState({
             figsize: [this.props.width, this.props.height],
             sorting: this.props.sorting,

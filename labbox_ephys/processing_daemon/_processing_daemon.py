@@ -1,3 +1,4 @@
+import traceback
 import numpy as np
 import time
 from labbox_ephys import load_recording
@@ -15,7 +16,16 @@ class ProcessingDaemon:
         for doc in dbcollection('sortings').find(dict(
             status='pending'
         )):
-            self._handle_pending_sorting(doc)
+            try:
+                self._handle_pending_sorting(doc)
+            except:
+                traceback.print_exc()
+                dbcollection('sortings').update_one(
+                    dict(sorting_id=doc['sorting_id']),
+                    {'$set': dict(
+                        status='error'
+                    )}
+                )
     def run(self):
         while True:
             self.iterate()

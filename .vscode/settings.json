@@ -1,3 +1,4 @@
 {
-    "terminal.integrated.experimentalRefreshOnResume": true
+    "terminal.integrated.experimentalRefreshOnResume": true,
+    "python.pythonPath": "/Users/jmagland/opt/miniconda3/envs/dev/bin/python"
 }

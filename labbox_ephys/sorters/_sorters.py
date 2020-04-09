@@ -4,8 +4,9 @@ import random
 import json
 from types import SimpleNamespace
 import hither2 as hi
+import kachery as ka
 
-@hi.function('mountainsort4', '0.1.0')
+@hi.function('mountainsort4', '0.1.3')
 @hi.container('docker://magland/sf-mountainsort4:0.3.2')
 @hi.local_modules(['../../labbox_ephys'])
 def mountainsort4(
@@ -26,7 +27,8 @@ def mountainsort4(
     import spikesorters as ss
     import labbox_ephys as le
 
-    recording = le.LabboxEphysRecordingExtractor(recording, download=False)
+    with ka.config(fr='labbox_ephys_readonly'):
+        recording = le.LabboxEphysRecordingExtractor(recording, download=True)
 
     # for quick testing
     # import spikeextractors as se

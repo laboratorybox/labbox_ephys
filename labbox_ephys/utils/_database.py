@@ -11,7 +11,7 @@ def dbcollection(collection):
 def remote_job_handler():
     return hi.RemoteJobHandler(
         database=database(),
-        compute_resource_id=os.environ['COMPUTE_RESOURCE_ID']
+        compute_resource_id=os.environ['LABBOX_EPHYS_COMPUTE_RESOURCE_ID']
     )
 
 def job_cache():

@@ -36,15 +36,15 @@
 	"remoteUser": "vscode",
 
 	"mounts": [
-		"source=${localEnv:KACHERY_STORAGE_DIR},target=${localEnv:KACHERY_STORAGE_DIR},type=bind,consistency=cached",
+		"source=${localEnv:KACHERY_STORAGE_DIR},target=${localEnv:KACHERY_STORAGE_DIR},type=bind,consistency=delegated",
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
-		"source=/tmp,target=/tmp,type=bind,consistency=cached",
-		"source=${localEnv:REACTOPYA_SOURCE_DIR},target=/workspaces/reactopya,type=bind,consistency=cached",
-		"source=${localEnv:HITHER2_SOURCE_DIR},target=/workspaces/hither2,type=bind,consistency=cached",
-		"source=${localEnv:KACHERY_SOURCE_DIR},target=/workspaces/kachery,type=bind,consistency=cached",
-		"source=${localEnv:SPIKEFOREST2_SOURCE_DIR},target=/workspaces/spikeforest2,type=bind,consistency=cached",
-		"source=${localEnv:LABBOX_EPHYS_DATA_DIR},target=/data/local-data,type=bind,consistency=cached",
-		"source=${localEnv:LABBOX_EPHYS_HOME},target=/home/labbox,type=bind,consistency=cached",
+		"source=/tmp,target=/tmp,type=bind,consistency=delegated",
+		"source=${localEnv:REACTOPYA_SOURCE_DIR},target=/workspaces/reactopya,type=bind,consistency=delegated",
+		"source=${localEnv:HITHER2_SOURCE_DIR},target=/workspaces/hither2,type=bind,consistency=delegated",
+		"source=${localEnv:KACHERY_SOURCE_DIR},target=/workspaces/kachery,type=bind,consistency=delegated",
+		"source=${localEnv:SPIKEFOREST2_SOURCE_DIR},target=/workspaces/spikeforest2,type=bind,consistency=delegated",
+		"source=${localEnv:LABBOX_EPHYS_DATA_DIR},target=/data/local-data,type=bind,consistency=delegated",
+		"source=${localEnv:LABBOX_EPHYS_HOME},target=/home/labbox,type=bind,consistency=delegated",
 
 		// So that installed vscode extensions persist between builds
 		// See: https://code.visualstudio.com/docs/remote/containers-advanced#_avoiding-extension-reinstalls-on-container-rebuild
@@ -66,7 +66,7 @@
 		"DISPLAY": "${localEnv:DISPLAY}",
 		"HOME": "/home/vscode",
 		// "MONGO_URI": "mongodb://localhost:27020",
-		"COMPUTE_RESOURCE_ID": "labbox-ephys-dev"
+		"COMPUTE_RESOURCE_ID": "${localEnv:LABBOX_EPHYS_COMPUTE_RESOURCE_ID}"
 	},
 
 	"runArgs": [
