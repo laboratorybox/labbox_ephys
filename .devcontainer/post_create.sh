@@ -1,11 +1,11 @@
-#!/bin/bash
+# #!/bin/bash
 
-set -ex
+# set -ex
 
-sudo usermod -aG docker vscode
-newgrp docker
+# sudo usermod -aG docker vscode
+# newgrp docker
 
-# reactopya
+# # reactopya
 cd /workspaces/reactopya
 pip install --no-deps -e .
 echo "export PATH=/workspaces/reactopya/bin:\$PATH" >> ~/.bashrc
@@ -27,12 +27,12 @@ pip install --no-deps -e .
 cd /workspaces/labbox_ephys
 pip install --no-deps -e .
 
-cat <<EOT >> ~/.bashrc
-alias gs="git status"
-alias gpl="git pull"
-alias gps="git push"
-alias gpst="git push && git push --tags"
-alias gc="git commit"
-alias ga="git add -u"
-EOT
+# cat <<EOT >> ~/.bashrc
+# alias gs="git status"
+# alias gpl="git pull"
+# alias gps="git push"
+# alias gpst="git push && git push --tags"
+# alias gc="git commit"
+# alias ga="git add -u"
+# EOT
 

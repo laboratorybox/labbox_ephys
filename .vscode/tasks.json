@@ -6,14 +6,14 @@
     "tasks": [
         {
             // Start the jupyterlab for dev
-            "label": "jupyterlab-dev",
+            "label": "jupyterlab",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./run_jupyterlab.sh"
         },
         {
             // Start the compute resource for dev
             // Sleep may be needed to allow the database to start up
-            "label": "compute-resource-dev",
+            "label": "compute-resource",
             "type": "shell",
             "command": "cd devel/tasks && sleep 1 && bash -ic ./run_compute_resource.sh"
         },
@@ -25,27 +25,33 @@
         },
         {
             // Start the GUI
-            "label": "build-gui-dev",
+            "label": "build-gui",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./build_gui.sh"
         },
         {
             // Start the GUI
-            "label": "gui-dev",
+            "label": "gui",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./run_gui.sh"
         },
         {
             // reactopya install-dev
-            "label": "gui-install-dev",
+            "label": "dev-gui-install",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./gui_install_dev.sh"
         },
         {
             // reactopya start-dev
-            "label": "gui-start-dev",
+            "label": "dev-gui-start",
             "type": "shell",
             "command": "cd devel/tasks && bash -ic ./gui_start_dev.sh"
+        },
+        {
+            // Processing daemon
+            "label": "processing-daemon",
+            "type": "shell",
+            "command": "le-processing-daemon run"
         }
     ]
 }

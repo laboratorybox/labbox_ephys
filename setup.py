@@ -9,7 +9,9 @@ setuptools.setup(
     author_email="jmagland@flatironinstitute.org",
     description="Python package for labbox_ephys",
     packages=setuptools.find_packages(),
-    scripts=[],
+    scripts=[
+        'bin/le-processing-daemon'
+    ],
     install_requires=[
     ],
     classifiers=(
